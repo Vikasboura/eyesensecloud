@@ -1,0 +1,9 @@
+{
+  "version": "1.2.0",
+  "release_date": "2026-05-25",
+  "files": {
+    "static/alert_styles.css": "32629b3c11f71c4c1a71966a9838321a",
+    "static/update_test.txt": "3f20f09a5cb44816c7a4b277d33d6b05",
+    "static/update_success.txt": "e6191ef60d5b62b17f83a54d588523ef"
+  }
+}

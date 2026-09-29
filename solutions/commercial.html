@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>EyeSense | Commercial Buildings Solution</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-header: rgba(255, 255, 255, 0.98);
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --card-bg: #ffffff;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      --btn-primary: #2563eb;
+      --btn-primary-hover: #1d4ed8;
+      --btn-outline-border: #2563eb;
+      --footer-bg: #0f2b3d;
+}
+
+    body.dark {
+      --bg-primary: #0f172a;
+      --bg-secondary: #020617;
+      --bg-header: rgba(15, 23, 42, 0.98);
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+      --card-bg: #1e293b;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      --btn-primary: #3b82f6;
+      --btn-primary-hover: #2563eb;
+      --btn-outline-border: #3b82f6;
+      --footer-bg: #020617;
+}
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--btn-primary);
+      border-radius: 10px;
+    }
+
+    .header {
+      background: var(--bg-header);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .header.scrolled {
+      background: var(--bg-header);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo i {
+      font-size: 2rem;
+      color: var(--btn-primary);
+    }
+
+    .logo span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--btn-primary), #7c3aed);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-menu a,
+    .dropdown-btn {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.85rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0.5rem 0;
+      transition: color 0.3s;
+    }
+
+    .nav-menu a:hover,
+    .dropdown-btn:hover {
+      color: var(--btn-primary);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dropdown-content {
+      position: absolute;
+      top: 35px;
+      left: -20px;
+      background: var(--card-bg);
+      min-width: 220px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+      border-radius: 16px;
+      padding: 0.6rem 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 100;
+      border: 1px solid var(--border-color);
+    }
+
+    .dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 0.7rem 1.3rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+      background: var(--bg-secondary);
+      color: var(--btn-primary);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--btn-outline-border) !important;
+      background: transparent !important;
+      padding: 0.4rem 1rem !important;
+      border-radius: 40px !important;
+      color: var(--btn-outline-border) !important;
+      font-weight: 600 !important;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 0.85rem !important;
+      transition: all 0.3s;
+    }
+
+    .btn-outline:hover {
+      background: var(--btn-primary) !important;
+      color: white !important;
+    }
+
+    .btn-solid {
+      background: var(--btn-primary) !important;
+      color: white !important;
+      padding: 0.4rem 1rem !important;
+      border-radius: 40px !important;
+      border: none !important;
+      font-weight: 600 !important;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 0.85rem !important;
+      transition: all 0.3s;
+    }
+
+    .btn-solid:hover {
+      background: var(--btn-primary-hover) !important;
+      transform: translateY(-2px);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-secondary);
+      border-color: var(--btn-primary);
+    }
+
+    .mobile-toggle {
+      display: none;
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 9rem 0 5rem;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e9f2fa 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    body.dark .hero {
+      background: linear-gradient(135deg, #020617 0%, #0b1528 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      background: rgba(10, 102, 185, 0.1);
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      color: #0a66b9;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 span {
+      color: #0a66b9;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Smart Lobby Speed Gate Storyboard Animation */
+    .animation-container {
+      width: 100%;
+      height: 320px;
+      background: var(--bg-secondary);
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lobby-scene {
+      width: 85%;
+      height: 65%;
+      position: relative;
+      background: linear-gradient(to bottom, rgba(37, 99, 235, 0.03) 0%, rgba(37, 99, 235, 0.01) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .turnstile-gate {
+      width: 100px;
+      height: 70px;
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gate-post-side {
+      width: 12px;
+      height: 100%;
+      background: #475569;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    .gate-glass-arm {
+      position: absolute;
+      top: 20px;
+      width: 40px;
+      height: 6px;
+      background: rgba(59, 130, 246, 0.7);
+      border-radius: 3px;
+      box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+      transition: transform 0.5s ease;
+    }
+
+    .arm-left {
+      left: 12px;
+      transform-origin: left center;
+      animation: swing-arm-left 8s infinite ease-in-out;
+    }
+
+    .arm-right {
+      right: 12px;
+      transform-origin: right center;
+      animation: swing-arm-right 8s infinite ease-in-out;
+    }
+
+    @keyframes swing-arm-left {
+
+      0%,
+      45% {
+        transform: rotate(0deg);
+        background: rgba(59, 130, 246, 0.7);
+      }
+
+      55%,
+      85% {
+        transform: rotate(-90deg);
+        background: rgba(16, 185, 129, 0.7);
+      }
+
+      92%,
+      100% {
+        transform: rotate(0deg);
+        background: rgba(59, 130, 246, 0.7);
+      }
+    }
+
+    @keyframes swing-arm-right {
+
+      0%,
+      45% {
+        transform: rotate(0deg);
+        background: rgba(59, 130, 246, 0.7);
+      }
+
+      55%,
+      85% {
+        transform: rotate(90deg);
+        background: rgba(16, 185, 129, 0.7);
+      }
+
+      92%,
+      100% {
+        transform: rotate(0deg);
+        background: rgba(59, 130, 246, 0.7);
+      }
+    }
+
+    .visitor-pedestrian {
+      position: absolute;
+      bottom: 25px;
+      left: 15%;
+      font-size: 2.2rem;
+      color: var(--text-muted);
+      animation: walk-through-gate 8s infinite ease-in-out;
+      z-index: 10;
+    }
+
+    @keyframes walk-through-gate {
+      0% {
+        left: 15%;
+        opacity: 1;
+        color: var(--text-muted);
+      }
+
+      40% {
+        left: 40%;
+        opacity: 1;
+        color: var(--text-muted);
+      }
+
+      55%,
+      85% {
+        left: 75%;
+        opacity: 1;
+        color: #10b981;
+      }
+
+      90%,
+      100% {
+        left: 85%;
+        opacity: 0;
+      }
+    }
+
+    .face-scan-box {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 40px;
+      border: 2px solid #3b82f6;
+      border-radius: 4px;
+      animation: scan-pulse-bracket 8s infinite ease-in-out;
+      opacity: 0;
+    }
+
+    @keyframes scan-pulse-bracket {
+
+      0%,
+      15% {
+        opacity: 0;
+        border-color: #3b82f6;
+      }
+
+      20%,
+      45% {
+        opacity: 1;
+        border-color: #3b82f6;
+        transform: translateX(-50%) scale(1.1);
+      }
+
+      48%,
+      85% {
+        opacity: 1;
+        border-color: #10b981;
+        transform: translateX(-50%) scale(1);
+      }
+
+      90%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .commercial-log-badge {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      z-index: 12;
+      animation: comm-status-cycle 8s infinite ease-in-out;
+    }
+
+    @keyframes comm-status-cycle {
+
+      0%,
+      19% {
+        background: #64748b;
+        color: white;
+      }
+
+      20%,
+      49% {
+        background: rgba(59, 130, 246, 0.15);
+        color: #3b82f6;
+        border: 1px solid #3b82f6;
+      }
+
+      50%,
+      85% {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border: 1px solid #10b981;
+      }
+
+      90%,
+      100% {
+        background: #64748b;
+        color: white;
+      }
+    }
+
+    .commercial-log-badge::after {
+      content: "LOBBY SECURED";
+      animation: comm-status-txt 8s infinite ease-in-out;
+    }
+
+    @keyframes comm-status-txt {
+
+      0%,
+      19% {
+        content: "LOBBY SECURED";
+      }
+
+      20%,
+      49% {
+        content: "RECOGNIZING FACE...";
+      }
+
+      50%,
+      85% {
+        content: "ACCESS GRANTED - SPEED GATE OPEN";
+      }
+
+      90%,
+      100% {
+        content: "LOBBY SECURED";
+      }
+    }
+
+    /* Section Titles */
+    .section-title {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .section-title p {
+      color: var(--text-secondary);
+      max-width: 650px;
+      margin: 1rem auto 0;
+      font-size: 1.05rem;
+    }
+
+    /* Features Grid */
+    .features {
+      padding: 5rem 0;
+      background: var(--bg-primary);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 2rem;
+      transition: all 0.35s ease;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--btn-primary);
+      box-shadow: 0 20px 30px -12px rgba(10, 102, 185, 0.15);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(10, 102, 185, 0.08);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-icon i {
+      font-size: 1.8rem;
+      color: var(--btn-primary);
+    }
+
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+      color: var(--text-primary);
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Stats Section */
+    .stats {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 4rem 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--btn-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* Benefits List */
+    .benefits {
+      padding: 5rem 0;
+      background: var(--bg-primary);
+    }
+
+    .benefits-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    .benefit-item i {
+      font-size: 1.5rem;
+      color: #10b981;
+    }
+
+    .benefit-item span {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 5rem 0;
+      background: var(--bg-primary);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background: var(--bg-secondary);
+      border-radius: 24px;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .stars {
+      color: #f5b042;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card p {
+      color: var(--text-secondary);
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card h4 {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, #0f2b3d, #1e4a6e);
+      color: white;
+      padding: 4rem;
+      text-align: center;
+      border-radius: 24px;
+      margin: 3rem 0;
+      box-shadow: var(--card-shadow);
+    }
+
+            /* Footer */
+    footer {
+      background: var(--footer-bg, #020617);
+      color: #94a3b8;
+      padding: 3rem 0 2rem;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      transition: background-color 0.3s ease;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-grid h4 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .footer-grid p {
+      color: #94a3b8;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-grid li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-grid a {
+      color: #94a3b8;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-grid a:hover {
+      color: white;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #1e4a6e;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .nav-menu {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 1.2rem;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mobile-menu-panel {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      width: 260px;
+      height: 100%;
+      background: var(--card-bg);
+      z-index: 1100;
+      box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .mobile-menu-panel.open {
+      right: 0;
+    }
+
+    .overlay-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1050;
+      display: none;
+    }
+
+    .overlay-menu.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header" id="navbar">
+    <div class="container">
+      <div class="navbar">
+        <a href="../index.html" class="logo"><i class="fas fa-eye"></i><span>EyeSense</span></a>
+        <div class="nav-menu">
+          <a href="../index.html">Home</a>
+          <div class="dropdown">
+            <button class="dropdown-btn">Features <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="../features/ai-surveillance.html">AI Surveillance</a>
+              <a href="../features/visitor-management.html">Visitor Management</a>
+              <a href="../features/society-management.html"> Society Management</a>
+              <a href="../features/security-operations.html"> Security Operations</a>
+              <a href="../features/payment-billing.html">Payment & Billing</a>
+              <a href="../features/smart-notifications.html">Smart Notifications</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="dropdown-btn">Solutions <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="residential.html"> Residential Societies</a>
+              <a href="commercial.html"> Commercial Buildings</a>
+              <a href="education.html"> Schools & Colleges</a>
+              <a href="healthcare.html"> Hospitals</a>
+              <a href="manufacturing.html"> Factories & Warehouses</a>
+              <a href="retail.html"> Retail Stores</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="dropdown-btn">Industries <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="../industries/residential-industry.html">Residential Societies</a>
+              <a href="../industries/healthcare-industry.html">Healthcare Industries</a>
+              <a href="../industries/education-industry.html">Education Societies</a>
+              <a href="../industries/manufacturing-industry.html">Manufacturing Industries</a>
+              <a href="../industries/logistics-industry.html">Logistics Industries</a>
+              <a href="../industries/corporate-industry.html">Corporate Offices</a>
+            </div>
+          </div>
+          <a href="../pricing.html">Pricing</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="../index.html#request-demo">Request Demo</a>
+          <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i> Theme</button>
+          <a href="../login.php">Login</a>
+          <a href="../signup.html">Sign Up</a>
+          <div class="dropdown download-dropdown">
+            <button class="btn-download"
+              style="padding: 0.4rem 1rem; border-radius: 40px; border: none; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; background: #2b32b5; color: white;">
+              <i class="fas fa-download"></i> Download
+            </button>
+            <div class="dropdown-content" style="min-width: 180px; left: auto; right: 0;">
+              <a href="https://indsac.cloudtb.online/Eyesense.exe" download><i class="fas fa-download"></i> Download for
+                Windows</a>
+              <a href="https://indsac.cloudtb.online/u/download/prod/Eyesense.apk" download><i
+                  class="fab fa-android" style="color: #2b32b5;"></i> Android APK</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu-panel" id="mobilePanel">
+    <div style="display: flex; flex-direction: column; gap: 1.2rem; overflow-y: auto; height: 100%;">
+      <a href="../index.html" style="text-decoration: none; font-weight: 600; color: var(--text-primary);">Home</a>
+
+      <div style="font-weight: 600; color: var(--text-primary); margin-top: 0.5rem;">Features</div>
+      <div
+        style="display: flex; flex-direction: column; gap: 0.8rem; padding-left: 1rem; border-left: 2px solid var(--border-color);">
+        <a href="../features/ai-surveillance.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">AI Surveillance</a>
+        <a href="../features/visitor-management.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Visitor Management</a>
+        <a href="../features/society-management.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Society Management</a>
+        <a href="../features/security-operations.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Security Operations</a>
+        <a href="../features/payment-billing.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Payment & Billing</a>
+        <a href="../features/smart-notifications.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Smart Notifications</a>
+      </div>
+
+      <div style="font-weight: 600; color: var(--text-primary); margin-top: 0.5rem;">Solutions</div>
+      <div
+        style="display: flex; flex-direction: column; gap: 0.8rem; padding-left: 1rem; border-left: 2px solid var(--border-color);">
+        <a href="residential.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Residential Societies</a>
+        <a href="commercial.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Commercial Buildings</a>
+        <a href="education.html" style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Schools
+          & Colleges</a>
+        <a href="healthcare.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Hospitals</a>
+        <a href="manufacturing.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Factories & Warehouses</a>
+        <a href="retail.html" style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Retail
+          Stores</a>
+      </div>
+
+      <a href="../pricing.html"
+        style="text-decoration: none; font-weight: 600; color: var(--text-primary); margin-top: 0.5rem;">Pricing</a>
+      <a href="../index.html#about"
+        style="text-decoration: none; font-weight: 600; color: var(--text-primary);">About</a>
+      <a href="../index.html#contact"
+        style="text-decoration: none; font-weight: 600; color: var(--text-primary);">Contact</a>
+
+      <button class="theme-toggle" id="themeToggleMobile" style="margin-top: 1rem; width: fit-content;"><i
+          class="fas fa-moon"></i> Theme</button>
+
+      <button class="btn-outline" onclick="location.href='../login.php'"
+        style="margin-top: 1rem;">Login</button>
+      <button class="btn-solid" onclick="location.href='../signup.html'">Sign Up</button>
+    </div>
+  </div>
+  <div class="overlay-menu" id="overlayMenu"></div>
+
+  <!-- Hero Section (Media Left Layout) -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-media">
+          <!-- Interactive Smart Lobby turnstile Speed Gate -->
+          <div class="animation-container">
+            <div class="commercial-log-badge"></div>
+            <div class="lobby-scene">
+              <div class="visitor-pedestrian">
+                <div class="face-scan-box"></div>
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="turnstile-gate">
+                <div class="gate-post-side">
+                  <div class="gate-glass-arm arm-left"></div>
+                </div>
+                <div class="gate-post-side">
+                  <div class="gate-glass-arm arm-right"></div>
+                </div>
+              </div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">
+              <i class="fas fa-camera"></i> Live AI Facial Biometric Speed Gate Checkpoint
+            </p>
+          </div>
+        </div>
+        <div class="hero-text">
+          <span class="hero-badge"><i class="fas fa-building"></i> Commercial Buildings</span>
+          <h1>Secure & <span>Automated Towers</span></h1>
+          <p>Enterprise-grade security and operations management for offices, malls, corporate towers, and business
+            parks. Track visitor credentials, automate employee access, optimize space utility, and ensure safety.</p>
+          <div class="hero-buttons">
+            <a href="../index.html#request-demo" class="btn-solid">Request Demo →</a>
+            <a href="#overview" class="btn-outline">View Capabilities</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-col">
+          <div class="stat-number">1,200+</div>
+          <div class="stat-label">Towers Automated</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-number">10M+</div>
+          <div class="stat-label">Daily Check-ins</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-number">99.9%</div>
+          <div class="stat-label">Access Uptime</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-number">45%</div>
+          <div class="stat-label">Energy Savings</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenges Section -->
+  <section id="overview" class="features" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-title">
+        <h2>Challenges We Solve</h2>
+        <p>Upgrade manual logs to smart facility intelligence networks.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-door-closed"></i></div>
+          <h3>Unauthorized Entry</h3>
+          <p>Tailgating issues, fake visitor badges, and loose access controls at secondary entry/exit gates.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-hourglass-half"></i></div>
+          <h3>Reception Bottlenecks</h3>
+          <p>Long queues during peak business hours, manual clipboard registration delays, and paper logs.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-parking"></i></div>
+          <h3>Parking Congestion</h3>
+          <p>Unmanaged tenant parking slots, manual toll ticket handling, and security threats in basement zones.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-chart-pie"></i></div>
+          <h3>Wasted Space</h3>
+          <p>Under-utilized conference halls, empty workspaces, and high HVAC utility losses in unpopulated sectors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities Section -->
+  <section class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>EyeSense Solution for Commercial Towers</h2>
+        <p>Unifying access control, visitor tracking, and building analytics under one enterprise system.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-id-card"></i></div>
+          <h3>Employee Access Control</h3>
+          <p>Direct biometrics, card keyless gates, and live synchronization with shift schedules and attendance
+            systems.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-user-shield"></i></div>
+          <h3>Visitor Management</h3>
+          <p>Self check-in digital kiosks, cloud-printed badges, and direct SMS/Slack notifications to hosts on arrival.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-car-side"></i></div>
+          <h3>Smart Parking Management</h3>
+          <p>High-accuracy ANPR (Automatic Number Plate Recognition) gates, reserved parking tags, and automated
+            billing.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Occupancy Analytics</h3>
+          <p>Visualizing facility footfall traffic, desk utilization rates, and heatmaps to optimize floor spaces and
+            HVAC use.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-radiation"></i></div>
+          <h3>Emergency Evacuation Alerts</h3>
+          <p>Automated fire alarm sensor triggers, PA announcements, and safety checkpoint broadcasts.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-sliders-h"></i></div>
+          <h3>BMS System Integration</h3>
+          <p>Easily interfaces with Honeywell, Schneider, and Johnson Controls HVAC, lighting, and elevator controllers.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-title">
+        <h2>Key Benefits</h2>
+        <p>Maximize asset yield, energy savings, and corporate safety scores.</p>
+      </div>
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>99.9% reduction in security breach risks</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>80% reduction in check-in processing duration</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>Up to 25% energy conservation via smart HVAC controls</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>Optimized real estate footprint allocation</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-title">
+        <h2>Trusted by Real Estate Leaders</h2>
+        <p>Delivering high reliability across major tech-parks.</p>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+              class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p>"Integrating EyeSense ANPR and kiosk registration completely cleared up morning gridlock at our gates.
+            Operations are seamless."</p>
+          <h4>— Ajay Sen, Operations Director, Nexa Tech Park</h4>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+              class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p>"The space utilization analytics reports helped us downsize redundant meeting rooms, saving $200k in yearly
+            leasing costs."</p>
+          <h4>— Monica Roy, FM Specialist, AlphaSpace Towers</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <div class="container">
+    <section class="cta-section">
+      <h2>Secure your commercial property with AI</h2>
+      <p style="margin: 1rem 0 2rem;">Talk to our tech-park integration specialists today.</p>
+      <a href="../index.html#request-demo" class="btn-solid"
+        style="background: white !important; color: #0f2b3d !important;">Request Demo →</a>
+    </section>
+  </div>
+
+    <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4><a href="../index.html" style="color: white; text-decoration: none;">EyeSense</a></h4>
+          <p><a href="../index.html">AI-driven security platform</a></p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul>
+            <li><a href="../features/ai-surveillance.html">AI Surveillance</a></li>
+            <li><a href="../features/visitor-management.html">Visitor Management</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Solutions</h4>
+          <ul>
+            <li><a href="../solutions/residential.html">Residential</a></li>
+            <li><a href="../solutions/commercial.html">Commercial</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> eyesense@indsac.com</p>
+          <p><i class="fas fa-phone"></i> +91 76 7628 9081</p>
+        </div>
+      </div>
+      <div class="copyright">© 2026 EyeSense. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeToggleMobile = document.getElementById('themeToggleMobile');
+
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    if (themeToggle) themeToggle.addEventListener('click', toggleDark);
+    if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleDark);
+    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+
+    // Scroll navbar effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 30) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const panel = document.getElementById('mobilePanel');
+    const overlay = document.getElementById('overlayMenu');
+
+    function closeMenu() {
+      panel.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openMenu() {
+      panel.classList.add('open');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    menuBtn.addEventListener('click', () => {
+      if (panel.classList.contains('open')) closeMenu();
+      else openMenu();
+    });
+
+    overlay.addEventListener('click', closeMenu);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - EyeSense AI Security Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --header-bg-light: rgba(255, 255, 255, 0.96);
+            --header-bg-dark: rgba(15, 23, 42, 0.96);
+            --header-border-light: rgba(226, 232, 240, 0.8);
+            --header-border-dark: rgba(30, 41, 59, 0.8);
+            --primary-blue: #2563eb;
+            --primary-hover: #1d4ed8;
+            --footer-bg: #0f2b3d;
+        }
+
+        body.dark {
+            --footer-bg: #020617;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2b3d 0%, #1e4a6e 50%, #0f2b3d 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ── Standard EyeSense Fixed Header ── */
+        .header {
+            background: var(--header-bg-light);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--header-border-light);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        body.dark .header {
+            background: var(--header-bg-dark);
+            border-bottom-color: var(--header-border-dark);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 0;
+            gap: 1rem;
+        }
+
+        .header-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .header-logo i {
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+            filter: drop-shadow(0 2px 8px rgba(37, 99, 235, 0.3));
+        }
+
+        .header-logo span {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0.85rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu a,
+        .nav-menu .dropdown-btn {
+            text-decoration: none;
+            color: #475569;
+            font-weight: 500;
+            font-size: 0.85rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            padding: 0.45rem 0.6rem;
+            border-radius: 8px;
+            transition: color 0.2s, background 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        body.dark .nav-menu a,
+        body.dark .nav-menu .dropdown-btn {
+            color: #cbd5e1;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu .dropdown-btn:hover {
+            color: var(--primary-blue);
+            background: rgba(37, 99, 235, 0.06);
+        }
+
+        body.dark .nav-menu a:hover,
+        body.dark .nav-menu .dropdown-btn:hover {
+            color: #60a5fa;
+            background: rgba(96, 165, 250, 0.1);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #ffffff;
+            min-width: 230px;
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.15);
+            border-radius: 14px;
+            padding: 0.5rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(8px);
+            transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+            z-index: 1050;
+            border: 1px solid #e2e8f0;
+        }
+
+        body.dark .dropdown-content {
+            background: #1e293b;
+            border-color: #334155;
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .dropdown:hover .dropdown-content,
+        .dropdown:focus-within .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.65rem 1.2rem;
+            color: #475569 !important;
+            font-size: 0.85rem;
+            border-radius: 0;
+        }
+
+        body.dark .dropdown-content a {
+            color: #cbd5e1 !important;
+        }
+
+        .dropdown-content a:hover {
+            background: #f1f5f9 !important;
+            color: var(--primary-blue) !important;
+            padding-left: 1.4rem;
+        }
+
+        body.dark .dropdown-content a:hover {
+            background: #0f172a !important;
+            color: #60a5fa !important;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid #cbd5e1;
+            padding: 0.4rem 0.85rem;
+            border-radius: 20px;
+            cursor: pointer;
+            color: #475569;
+            font-weight: 500;
+            font-size: 0.82rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        body.dark .theme-toggle {
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        .btn-nav-outline {
+            border: 1.5px solid var(--primary-blue) !important;
+            background: transparent !important;
+            color: var(--primary-blue) !important;
+            padding: 0.4rem 1rem !important;
+            border-radius: 30px !important;
+            font-weight: 600 !important;
+            font-size: 0.82rem !important;
+            transition: all 0.2s !important;
+            text-decoration: none;
+        }
+
+        .btn-nav-outline:hover {
+            background: var(--primary-blue) !important;
+            color: #ffffff !important;
+        }
+
+        .btn-nav-solid {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+            color: #ffffff !important;
+            padding: 0.45rem 1.1rem !important;
+            border-radius: 30px !important;
+            font-weight: 600 !important;
+            font-size: 0.82rem !important;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
+            transition: all 0.2s !important;
+            text-decoration: none;
+        }
+
+        .btn-nav-solid:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4) !important;
+        }
+
+        .btn-download {
+            background: #2b32b5;
+            color: #ffffff !important;
+            padding: 0.4rem 0.95rem !important;
+            border-radius: 30px !important;
+            border: none;
+            font-weight: 600 !important;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem !important;
+            transition: all 0.2s;
+        }
+
+        .btn-download:hover {
+            background: #1e248a;
+            transform: translateY(-1px);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: #1e293b;
+            padding: 0.3rem 0.5rem;
+        }
+
+        body.dark .mobile-toggle {
+            color: #f8fafc;
+        }
+
+        /* Animated Wave Background */
+        .wave-bg {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .wave-bg svg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+        }
+
+        .wave-bg .wave1 {
+            animation: wave1 15s ease-in-out infinite;
+        }
+
+        .wave-bg .wave2 {
+            animation: wave2 12s ease-in-out infinite;
+        }
+
+        @keyframes wave1 {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(-3%) translateY(-5px); }
+        }
+
+        @keyframes wave2 {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            50% { transform: translateX(3%) translateY(3px); }
+        }
+
+        /* Main Center Wrapper — Keeps Form Centered & Prevents Overlap */
+        .signup-main-wrapper {
+            flex: 1 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 110px; /* Guarantees header never overlaps form */
+            padding-bottom: 50px; /* Guarantees footer never overlaps form */
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Signup Container */
+        .signup-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 480px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .signup-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: transform 0.3s ease;
+        }
+
+        .signup-card:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Logo */
+        .card-logo {
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .card-logo-icon {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.8rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 12px rgba(37, 99, 235, 0);
+            }
+        }
+
+        .card-logo-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .card-logo h2 {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+        }
+
+        .card-logo p {
+            color: #64748b;
+            font-size: 0.88rem;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .input-group:hover {
+            border-color: #2563eb;
+        }
+
+        .input-group:focus-within {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .input-icon {
+            padding: 0 1rem;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 0.9rem 1rem 0.9rem 0;
+            border: none;
+            outline: none;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            background: transparent;
+            color: #1e293b;
+        }
+
+        .input-group input::placeholder {
+            color: #94a3b8;
+        }
+
+        /* Password Toggle */
+        .password-toggle {
+            padding: 0 1rem;
+            cursor: pointer;
+            color: #94a3b8;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: #2563eb;
+        }
+
+        /* Buttons */
+        .btn-signup {
+            width: 100%;
+            padding: 0.95rem;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-signup:active {
+            transform: translateY(0);
+        }
+
+        /* Login Link */
+        .login-link {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .login-link a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .login-link a:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        /* Back to Home */
+        .back-home {
+            text-align: center;
+            margin-top: 1.25rem;
+        }
+
+        .back-home a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-home a:hover {
+            color: #2563eb;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #dc2626;
+            border-left: 4px solid #dc2626;
+        }
+
+        .alert-success {
+            background: #dcfce7;
+            color: #16a34a;
+            border-left: 4px solid #16a34a;
+        }
+
+        .alert.show {
+            display: flex;
+        }
+
+        /* Loading State */
+        .btn-signup.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-signup.loading::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-top-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            animation: spin 0.8s linear infinite;
+            margin-left: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ── Standard EyeSense Footer ── */
+        .eyesense-footer {
+            background: var(--footer-bg);
+            color: #94a3b8;
+            padding: 3.5rem 0 2rem;
+            margin-top: auto;
+            position: relative;
+            z-index: 20;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .eyesense-footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .eyesense-footer-grid h4 {
+            margin-bottom: 1.2rem;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        .eyesense-footer-grid h4 a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .eyesense-footer-grid ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .eyesense-footer-grid li {
+            margin-bottom: 0.65rem;
+        }
+
+        .eyesense-footer-grid a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.88rem;
+            transition: color 0.2s, padding-left 0.2s;
+            display: inline-block;
+        }
+
+        .eyesense-footer-grid a:hover {
+            color: #ffffff;
+            padding-left: 3px;
+        }
+
+        .eyesense-footer-grid p {
+            color: #94a3b8;
+            font-size: 0.88rem;
+            margin-bottom: 0.65rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            line-height: 1.5;
+        }
+
+        .eyesense-footer-grid p i {
+            color: #3b82f6;
+            width: 16px;
+            text-align: center;
+        }
+
+        .eyesense-copyright {
+            text-align: center;
+            padding-top: 1.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: #64748b;
+            font-size: 0.82rem;
+        }
+
+        @media (max-width: 1024px) {
+            .mobile-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #ffffff;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 1rem 1.5rem;
+                gap: 0.5rem;
+                border-bottom: 1px solid #e2e8f0;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+                display: none;
+            }
+
+            body.dark .nav-menu {
+                background: #0f172a;
+                border-bottom-color: #334155;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            }
+
+            .nav-menu.open {
+                display: flex;
+            }
+
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                box-shadow: none;
+                border: none;
+                padding-left: 1rem;
+                transform: none;
+                display: none;
+            }
+
+            .dropdown.open .dropdown-content {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .signup-card {
+                padding: 1.8rem;
+                border-radius: 24px;
+            }
+            .signup-main-wrapper {
+                padding-top: 95px;
+                padding-bottom: 35px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ── 1. Top Navigation Header ── -->
+    <header class="header">
+        <div class="header-container">
+            <div class="navbar">
+                <a href="index.html" class="header-logo">
+                    <i class="fas fa-eye"></i>
+                    <span>EyeSense</span>
+                </a>
+
+                <button class="mobile-toggle" id="mobileMenuToggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <nav class="nav-menu" id="navMenu">
+                    <a href="index.html">Home</a>
+
+                    <!-- Features Dropdown -->
+                    <div class="dropdown">
+                        <button type="button" class="dropdown-btn">Features <i class="fas fa-chevron-down text-xs"></i></button>
+                        <div class="dropdown-content">
+                            <a href="features/ai-surveillance.html"><i class="fas fa-video mr-1.5"></i> AI Surveillance</a>
+                            <a href="features/visitor-management.html"><i class="fas fa-id-badge mr-1.5"></i> Visitor Management</a>
+                            <a href="features/society-management.html"><i class="fas fa-building mr-1.5"></i> Society Management</a>
+                            <a href="features/security-operations.html"><i class="fas fa-shield-halved mr-1.5"></i> Security Operations</a>
+                            <a href="features/payment-billing.html"><i class="fas fa-credit-card mr-1.5"></i> Payment & Billing</a>
+                            <a href="features/smart-notifications.html"><i class="fas fa-bell mr-1.5"></i> Smart Notifications</a>
+                        </div>
+                    </div>
+
+                    <!-- Solutions Dropdown -->
+                    <div class="dropdown">
+                        <button type="button" class="dropdown-btn">Solutions <i class="fas fa-chevron-down text-xs"></i></button>
+                        <div class="dropdown-content">
+                            <a href="solutions/residential.html"><i class="fas fa-house-chimney mr-1.5"></i> Residential Societies</a>
+                            <a href="solutions/commercial.html"><i class="fas fa-building mr-1.5"></i> Commercial Buildings</a>
+                            <a href="solutions/education.html"><i class="fas fa-graduation-cap mr-1.5"></i> Schools & Colleges</a>
+                            <a href="solutions/healthcare.html"><i class="fas fa-hospital mr-1.5"></i> Hospitals</a>
+                            <a href="solutions/manufacturing.html"><i class="fas fa-industry mr-1.5"></i> Factories & Warehouses</a>
+                            <a href="solutions/retail.html"><i class="fas fa-store mr-1.5"></i> Retail Stores</a>
+                        </div>
+                    </div>
+
+                    <!-- Industries Dropdown -->
+                    <div class="dropdown">
+                        <button type="button" class="dropdown-btn">Industries <i class="fas fa-chevron-down text-xs"></i></button>
+                        <div class="dropdown-content">
+                            <a href="industries/residential-industry.html">Residential Societies</a>
+                            <a href="industries/healthcare-industry.html">Healthcare Industries</a>
+                            <a href="industries/education-industry.html">Education Societies</a>
+                            <a href="industries/manufacturing-industry.html">Manufacturing Industries</a>
+                            <a href="industries/logistics-industry.html">Logistics Industries</a>
+                            <a href="industries/corporate-industry.html">Corporate Offices</a>
+                        </div>
+                    </div>
+
+                    <a href="pricing.html">Pricing</a>
+                    <a href="index.html#about">About</a>
+                    <a href="index.html#contact">Contact</a>
+                    <a href="index.html#request-demo">Request Demo</a>
+
+                    <!-- Theme Toggle -->
+                    <button type="button" class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i> <span>Theme</span>
+                    </button>
+
+                    <!-- Auth Buttons -->
+                    <a href="login.php" class="btn-nav-outline">Login</a>
+                    <a href="signup.html" class="btn-nav-solid">Sign Up</a>
+
+                    <!-- Download Dropdown -->
+                    <div class="dropdown">
+                        <button type="button" class="btn-download">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <div class="dropdown-content" style="min-width: 190px; right: 0; left: auto;">
+                            <a href="https://indsac.cloudtb.online/Eyesense.exe" download><i class="fas fa-download mr-1.5"></i> Windows EXE</a>
+                            <a href="https://indsac.cloudtb.online/u/download/prod/Eyesense.apk" download><i class="fab fa-android mr-1.5" style="color:#10b981;"></i> Android APK</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Animated Wave Background -->
+    <div class="wave-bg">
+        <svg class="wave1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#ffffff" fill-opacity="0.1"
+                d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+            </path>
+        </svg>
+        <svg class="wave2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#ffffff" fill-opacity="0.05"
+                d="M0,192L48,197.3C96,203,192,213,288,208C384,203,480,181,576,181.3C672,181,768,203,864,208C960,213,1056,203,1152,186.7C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+            </path>
+        </svg>
+    </div>
+
+    <!-- ── 2. Main Authentication Content (Centered, Non-overlapping) ── -->
+    <main class="signup-main-wrapper">
+        <div class="signup-container">
+            <div class="signup-card">
+                <div class="card-logo">
+                    <div class="card-logo-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <h2>Create Account</h2>
+                    <p>Join EyeSense AI Platform</p>
+                </div>
+
+                <div id="alertMessage" class="alert"></div>
+
+                <form id="signupForm">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-icon"><i class="fas fa-user"></i></span>
+                            <input type="text" id="fullname" placeholder="Full Name" required autocomplete="name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-icon"><i class="fas fa-phone"></i></span>
+                            <input type="tel" id="mobile" placeholder="Mobile Number (10 digits)" required maxlength="10" autocomplete="tel">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                            <input type="email" id="email" placeholder="Email Address" required autocomplete="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-icon"><i class="fas fa-lock"></i></span>
+                            <input type="password" id="password" placeholder="Password (min 6 characters)" required autocomplete="new-password">
+                            <span class="password-toggle" onclick="togglePassword('password', 'toggleIcon1')" title="Toggle password visibility">
+                                <i class="fas fa-eye-slash" id="toggleIcon1"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-icon"><i class="fas fa-shield-halved"></i></span>
+                            <input type="password" id="confirmPassword" placeholder="Confirm Password" required autocomplete="new-password">
+                            <span class="password-toggle" onclick="togglePassword('confirmPassword', 'toggleIcon2')" title="Toggle password visibility">
+                                <i class="fas fa-eye-slash" id="toggleIcon2"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-signup" id="signupBtn">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </button>
+                </form>
+
+                <div class="login-link">
+                    Already have an account? <a href="login.php">Login</a>
+                </div>
+
+                <div class="back-home">
+                    <a href="index.html">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ── 3. Standard EyeSense Footer ── -->
+    <footer class="eyesense-footer">
+        <div class="footer-container">
+            <div class="eyesense-footer-grid">
+                <div>
+                    <h4><a href="index.html"><i class="fas fa-eye text-blue-500 mr-1.5"></i> EyeSense</a></h4>
+                    <p>AI-driven security & smart facility operations platform for modern communities.</p>
+                    <p style="color: #64748b; font-size: 0.8rem; margin-top: 0.5rem;">Empowering smarter security for a safer tomorrow.</p>
+                </div>
+                <div>
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="features/ai-surveillance.html">AI Surveillance</a></li>
+                        <li><a href="features/visitor-management.html">Visitor Management</a></li>
+                        <li><a href="features/society-management.html">Society Management</a></li>
+                        <li><a href="features/payment-billing.html">Payment & Billing</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Solutions</h4>
+                    <ul>
+                        <li><a href="solutions/residential.html">Residential Societies</a></li>
+                        <li><a href="solutions/commercial.html">Commercial Buildings</a></li>
+                        <li><a href="solutions/education.html">Schools & Colleges</a></li>
+                        <li><a href="solutions/healthcare.html">Hospitals & Clinics</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-envelope"></i> eyesense@indsac.com</p>
+                    <p><i class="fas fa-phone"></i> +91 76 7628 9081</p>
+                    <p><i class="fas fa-location-dot"></i> Bengaluru, Karnataka, India</p>
+                </div>
+            </div>
+            <div class="eyesense-copyright">
+                &copy; 2026 EyeSense. All rights reserved. Powered by <strong style="color: #60a5fa;">INDSAC</strong>.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Form Validation & Interactive Scripts -->
+    <script>
+        // Password visibility toggle
+        function togglePassword(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const toggleIcon = document.getElementById(iconId);
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            }
+        }
+
+        // Show alert message
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alertMessage');
+            alertDiv.innerHTML = `<i class="fas ${type === 'error' ? 'fa-exclamation-circle' : type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i> ${message}`;
+            alertDiv.className = `alert alert-${type} show`;
+            setTimeout(() => {
+                alertDiv.classList.remove('show');
+            }, 4000);
+        }
+
+        // Handle signup form submission
+        document.getElementById('signupForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullname').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const signupBtn = document.getElementById('signupBtn');
+
+            // 1. Validation Requirements
+            if (!fullName || !mobile || !email || !password || !confirmPassword) {
+                showAlert('All fields are required.', 'error');
+                return;
+            }
+
+            if (fullName.length < 2) {
+                showAlert('Please enter a valid name.', 'error');
+                return;
+            }
+
+            // Mobile number: exactly 10 digits
+            const mobileRegex = /^\d{10}$/;
+            if (!mobileRegex.test(mobile)) {
+                showAlert('Mobile number must be exactly 10 digits.', 'error');
+                return;
+            }
+
+            // Email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showAlert('Please enter a valid email address.', 'error');
+                return;
+            }
+
+            // Password length
+            if (password.length < 6) {
+                showAlert('Password must be at least 6 characters.', 'error');
+                return;
+            }
+
+            // Password matching
+            if (password !== confirmPassword) {
+                showAlert('Passwords do not match.', 'error');
+                return;
+            }
+
+            // 2. Show processing state
+            signupBtn.classList.add('loading');
+            signupBtn.disabled = true;
+
+            // 3. Send details to backend
+            fetch('api/signup.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    fullname: fullName,
+                    mobile: mobile,
+                    email: email,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Success alert
+                    showAlert('You have signed up successfully. Redirecting to login...', 'success');
+
+                    // Redirect after 1.5 seconds to login page for sign in
+                    setTimeout(() => {
+                        document.getElementById('signupForm').reset();
+                        signupBtn.classList.remove('loading');
+                        signupBtn.disabled = false;
+                        window.location.href = 'login.php?registered=1';
+                    }, 1500);
+                } else {
+                    showAlert(data.error || 'Registration failed.', 'error');
+                    signupBtn.classList.remove('loading');
+                    signupBtn.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAlert('An error occurred. Please try again.', 'error');
+                signupBtn.classList.remove('loading');
+                signupBtn.disabled = false;
+            });
+        });
+
+        // Theme and Navigation Controller
+        (function() {
+            const themeBtn = document.getElementById('themeToggle');
+            if (themeBtn) {
+                themeBtn.addEventListener('click', function() {
+                    const isDark = document.body.classList.toggle('dark');
+                    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                    const icon = themeBtn.querySelector('i');
+                    if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                });
+                if (localStorage.getItem('theme') === 'dark') {
+                    document.body.classList.add('dark');
+                    const icon = themeBtn.querySelector('i');
+                    if (icon) icon.className = 'fas fa-sun';
+                }
+            }
+
+            const mobileToggle = document.getElementById('mobileMenuToggle');
+            const navMenu = document.getElementById('navMenu');
+            if (mobileToggle && navMenu) {
+                mobileToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('open');
+                    const icon = mobileToggle.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-bars');
+                        icon.classList.toggle('fa-xmark');
+                    }
+                });
+            }
+
+            document.querySelectorAll('.dropdown > .dropdown-btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 1024) {
+                        e.preventDefault();
+                        this.parentElement.classList.toggle('open');
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>

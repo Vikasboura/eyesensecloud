@@ -1,0 +1,13 @@
+{
+    "clients": {
+        "IND-2026-CA2LM": {
+            "enabled": true,
+            "updated_at": "2026-07-25T00:03:34+05:30"
+        },
+        "IND-2026-FT8JW": {
+            "enabled": true,
+            "updated_at": "2026-07-25T00:04:26+05:30"
+        }
+    },
+    "updated_at": "2026-07-25T00:04:26+05:30"
+}

@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - EyeSense AI Security Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-header: rgba(255, 255, 255, 0.98);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --border-color: #e2e8f0;
+            --card-bg: #ffffff;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            --footer-bg: #0f2b3d;
+            --btn-primary: #2563eb;
+            --btn-primary-hover: #1d4ed8;
+            --btn-outline-border: #2563eb;
+        }
+
+        body.dark {
+            --bg-primary: #0f172a;
+            --bg-secondary: #020617;
+            --bg-header: rgba(15, 23, 42, 0.98);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+            --card-bg: #1e293b;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            --footer-bg: #020617;
+            --btn-primary: #3b82f6;
+            --btn-primary-hover: #2563eb;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-header);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--btn-primary);
+        }
+
+        .logo span {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-menu a,
+        .dropdown-btn {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.85rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover,
+        .dropdown-btn:hover {
+            color: var(--btn-primary);
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 35px;
+            left: -20px;
+            background: var(--card-bg);
+            min-width: 240px;
+            box-shadow: var(--card-shadow);
+            border-radius: 16px;
+            padding: 0.6rem 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 100;
+            border: 1px solid var(--border-color);
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 0.7rem 1.3rem;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+
+        .dropdown-content a:hover {
+            background: var(--bg-secondary);
+            color: var(--btn-primary);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--btn-primary) !important;
+            background: transparent !important;
+            padding: 0.4rem 1rem !important;
+            border-radius: 40px !important;
+            color: var(--btn-primary) !important;
+            font-weight: 600 !important;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.85rem !important;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--btn-primary) !important;
+            color: white !important;
+        }
+
+        .btn-primary {
+            background: var(--btn-primary);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background: var(--btn-primary-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #0f2b3d 0%, #1e4a6e 100%);
+            color: white;
+            padding: 8rem 0 4rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 4rem 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-shadow);
+            border-color: var(--btn-primary);
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--btn-primary);
+            box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.3);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--btn-primary);
+            color: white;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--btn-primary);
+            margin: 1rem 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .feature-list li {
+            padding: 0.6rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .feature-list li i {
+            color: #10b981;
+            width: 20px;
+        }
+
+        .pricing-card .btn-primary,
+        .pricing-card .btn-outline {
+            width: 100%;
+            margin-top: 1rem;
+            padding: 0.8rem;
+        }
+
+        /* Compare Table */
+        .compare-section {
+            margin: 4rem 0;
+        }
+
+        .compare-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--btn-primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .check {
+            color: #10b981;
+            font-size: 1.1rem;
+        }
+
+        .times {
+            color: #ef4444;
+            font-size: 1.1rem;
+        }
+
+                /* Footer */
+    footer {
+      background: var(--footer-bg, #020617);
+      color: #94a3b8;
+      padding: 3rem 0 2rem;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      transition: background-color 0.3s ease;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-grid h4 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .footer-grid p {
+      color: #94a3b8;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-grid li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-grid a {
+      color: #94a3b8;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-grid a:hover {
+      color: white;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #1e4a6e;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .social-icons i {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .social-icons i:hover {
+            color: white;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: 28px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .modal-content .plan-price {
+            color: var(--btn-primary);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.8rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .modal-buttons button {
+            flex: 1;
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #94a3b8;
+        }
+
+        .btn-solid {
+            background: var(--btn-primary) !important;
+            color: white !important;
+            padding: 0.4rem 1rem !important;
+            border-radius: 40px !important;
+            border: none !important;
+            font-weight: 600 !important;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.85rem !important;
+            transition: all 0.3s;
+        }
+
+        .btn-solid:hover {
+            background: var(--btn-primary-hover) !important;
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.85rem;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--btn-primary);
+            color: var(--btn-primary);
+        }
+
+        .btn-download {
+            background: #2b32b5;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-download:hover {
+            background: #2b32b5;
+            transform: translateY(-2px);
+        }
+
+        .download-dropdown .dropdown-content {
+            left: auto;
+            right: 0;
+            min-width: 180px;
+        }
+
+        /* Notification Toast Styles */
+        .notification-toast {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            z-index: 9999;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: 420px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .notification-toast.show {
+            transform: translateX(0);
+        }
+
+        .notification-toast.success {
+            background: #10b981;
+        }
+
+        .notification-toast.error {
+            background: #ef4444;
+        }
+
+        .notification-toast.info {
+            background: #3b82f6;
+        }
+
+        .notification-toast i {
+            font-size: 1.2rem;
+        }
+
+        .notification-toast .close-toast {
+            margin-left: auto;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .notification-toast .close-toast:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="notificationToast" class="notification-toast">
+        <i id="toastIcon" class="fas fa-check-circle"></i>
+        <span id="toastMessage"></span>
+        <span class="close-toast" onclick="closeToast()">&times;</span>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="navbar">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-eye"></i>
+                    <span>EyeSense</span>
+                </a>
+                <div class="nav-menu">
+                    <a href="index.html">Home</a>
+
+                    <div class="dropdown">
+                        <button class="dropdown-btn">Features <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-content">
+                            <a href="features/ai-surveillance.html">AI Surveillance</a>
+                            <a href="features/visitor-management.html">Visitor Management</a>
+                            <a href="features/society-management.html"> Society Management</a>
+                            <a href="features/security-operations.html"> Security Operations</a>
+                            <a href="features/payment-billing.html">Payment & Billing</a>
+                            <a href="features/smart-notifications.html">Smart Notifications</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="dropdown-btn">Solutions <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-content">
+                            <a href="solutions/residential.html"> Residential Societies</a>
+                            <a href="solutions/commercial.html"> Commercial Buildings</a>
+                            <a href="solutions/education.html"> Schools & Colleges</a>
+                            <a href="solutions/healthcare.html"> Hospitals</a>
+                            <a href="solutions/manufacturing.html"> Factories & Warehouses</a>
+                            <a href="solutions/retail.html"> Retail Stores</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="dropdown-btn">Industries <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-content">
+                            <a href="industries/residential-industry.html">Residential Societies</a>
+                            <a href="industries/healthcare-industry.html">Healthcare Industries</a>
+                            <a href="industries/education-industry.html">Education Societies</a>
+                            <a href="industries/manufacturing-industry.html">Manufacturing
+                                Industries</a>
+                            <a href="industries/logistics-industry.html">Logistics Industries</a>
+                            <a href="industries/corporate-industry.html">Corporate Offices</a>
+                        </div>
+                    </div>
+
+                    <a href="pricing.html">Pricing</a>
+                    <a href="index.html#about">About</a>
+                    <a href="index.html#contact">Contact</a>
+                    <a href="index.html#request-demo">Request Demo</a>
+
+                    <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i> Theme</button>
+
+                    <a href="login.php">Login</a>
+                    <a href="signup.html">Sign Up</a>
+
+                    <div class="dropdown download-dropdown">
+                        <button class="btn-download"
+                            style="padding: 0.4rem 1rem; border-radius: 40px; border: none; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; background: #2b32b5; color: white;">
+                            <i class="fas fa-download"></i> Download
+                        </button>
+                        <div class="dropdown-content" style="min-width: 180px; left: auto; right: 0;">
+                            <a href="https://indsac.cloudtb.online/Eyesense.exe" download><i
+                                    class="fas fa-download"></i> Download for Windows</a>
+                            <a href="https://indsac.cloudtb.online/u/download/prod/Eyesense.apk" download><i
+                                    class="fab fa-android" style="color: #2b32b5;"></i> Android APK</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Simple, Transparent Pricing</h1>
+            <p>Choose the perfect plan for your community</p>
+        </div>
+
+        <div class="container pricing-section">
+            <div class="pricing-grid">
+                <!-- Essential Plan -->
+                <div class="pricing-card">
+                    <h3>Essential</h3>
+                    <div class="price">₹4,199<span>/month</span></div>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Up to 100 members</li>
+                        <li><i class="fas fa-check-circle"></i> Visitor Management System</li>
+                        <li><i class="fas fa-check-circle"></i> Basic AI Surveillance</li>
+                        <li><i class="fas fa-check-circle"></i> WhatsApp & Email Alerts</li>
+                        <li><i class="fas fa-check-circle"></i> Basic Analytics Dashboard</li>
+                        <li><i class="fas fa-check-circle"></i> Email Support</li>
+                    </ul>
+                    <button class="btn-primary pricing-btn" data-plan="Essential" data-price="4199">Subscribe
+                        Now</button>
+                </div>
+
+                <!-- Professional Plan -->
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3>Professional</h3>
+                    <div class="price">₹8,482<span>/month</span></div>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Up to 500 members</li>
+                        <li><i class="fas fa-check-circle"></i> All Essential Features</li>
+                        <li><i class="fas fa-check-circle"></i> Advanced AI Analytics</li>
+                        <li><i class="fas fa-check-circle"></i> ANPR Vehicle Recognition</li>
+                        <li><i class="fas fa-check-circle"></i> Face Recognition System</li>
+                        <li><i class="fas fa-check-circle"></i> Priority Support 24/7</li>
+                        <li><i class="fas fa-check-circle"></i> API Access</li>
+                        <li><i class="fas fa-check-circle"></i> Maintenance Billing</li>
+                    </ul>
+                    <button class="btn-primary pricing-btn" data-plan="Professional" data-price="8482">Subscribe
+                        Now</button>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Custom</div>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check-circle"></i> Unlimited Members & Cameras</li>
+                        <li><i class="fas fa-check-circle"></i> All Professional Features</li>
+                        <li><i class="fas fa-check-circle"></i> Dedicated Account Manager</li>
+                        <li><i class="fas fa-check-circle"></i> Custom Integration Services</li>
+                        <li><i class="fas fa-check-circle"></i> 24/7 Premium Support</li>
+                        <li><i class="fas fa-check-circle"></i> On-premise Deployment Option</li>
+                        <li><i class="fas fa-check-circle"></i> Multi-location Management</li>
+                        <li><i class="fas fa-check-circle"></i> Custom AI Model Training</li>
+                    </ul>
+                    <button class="btn-outline" onclick="location.href='index.html#contact'">Contact Sales</button>
+                </div>
+            </div>
+
+            <!-- Compare Plans -->
+            <div class="compare-section">
+                <h2>Compare All Features</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th class="text-center">Essential</th>
+                                <th class="text-center">Professional</th>
+                                <th class="text-center">Enterprise</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Visitor Management</td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>AI Surveillance</td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Face Recognition</td>
+                                <td class="text-center"><i class="fas fa-times times"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>ANPR Vehicle Recognition</td>
+                                <td class="text-center"><i class="fas fa-times times"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Maintenance Billing</td>
+                                <td class="text-center"><i class="fas fa-times times"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>API Access</td>
+                                <td class="text-center"><i class="fas fa-times times"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>24/7 Priority Support</td>
+                                <td class="text-center"><i class="fas fa-times times"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                            </tr>
+                            <tr>
+                                <td>Custom Integration</td>
+                                <td class="text-center"><i class="fas fa-times times"></i></td>
+                                <td class="text-center"><i class="fas fa-times times"></i></td>
+                                <td class="text-center"><i class="fas fa-check check"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Subscription Modal -->
+    <div id="subscribeModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h3 id="modalPlanName">Subscribe to Plan</h3>
+            <div class="plan-price" id="modalPlanPrice"></div>
+            <input type="text" id="customerName" placeholder="Full Name" required>
+            <input type="email" id="customerEmail" placeholder="Email Address" required>
+            <input type="tel" id="customerPhone" placeholder="Phone Number" required>
+            <div class="modal-buttons">
+                <button class="btn-primary" id="confirmSubscribeBtn">Subscribe Now</button>
+                <button class="btn-outline" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+        <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4><a href="index.html" style="color: white; text-decoration: none;">EyeSense</a></h4>
+                    <p><a href="index.html">AI-driven security platform</a></p>
+                </div>
+                <div>
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="features/ai-surveillance.html">AI Surveillance</a></li>
+                        <li><a href="features/visitor-management.html">Visitor Management</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Solutions</h4>
+                    <ul>
+                        <li><a href="solutions/residential.html">Residential</a></li>
+                        <li><a href="solutions/commercial.html">Commercial</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-envelope"></i> eyesense@indsac.com</p>
+                    <p><i class="fas fa-phone"></i> +91 76 7628 9081</p>
+                </div>
+            </div>
+            <div class="copyright">© 2026 EyeSense. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        });
+        if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+
+        let selectedPlan = { name: '', price: 0 };
+
+        // Add click event to all pricing buttons
+        document.querySelectorAll('.pricing-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const planName = this.getAttribute('data-plan');
+                const planPrice = parseInt(this.getAttribute('data-price'));
+                selectedPlan = { name: planName, price: planPrice };
+                document.getElementById('modalPlanName').innerText = `Subscribe to ${planName} Plan`;
+                document.getElementById('modalPlanPrice').innerHTML = `₹${planPrice.toLocaleString()}/month`;
+                document.getElementById('customerName').value = '';
+                document.getElementById('customerEmail').value = '';
+                document.getElementById('customerPhone').value = '';
+                document.getElementById('subscribeModal').style.display = 'flex';
+            });
+        });
+
+        function closeModal() {
+            document.getElementById('subscribeModal').style.display = 'none';
+        }
+
+        // Notification Toast System
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('notificationToast');
+            const icon = document.getElementById('toastIcon');
+            const msgEl = document.getElementById('toastMessage');
+
+            if (!toast) {
+                alert(message);
+                return;
+            }
+
+            toast.className = 'notification-toast ' + type;
+            icon.className = type === 'success' ? 'fas fa-check-circle' :
+                type === 'error' ? 'fas fa-exclamation-circle' :
+                    'fas fa-info-circle';
+            msgEl.textContent = message;
+
+            toast.classList.add('show');
+
+            clearTimeout(toast._hideTimeout);
+            toast._hideTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000);
+        }
+
+        function closeToast() {
+            const toast = document.getElementById('notificationToast');
+            if (toast) {
+                toast.classList.remove('show');
+                clearTimeout(toast._hideTimeout);
+            }
+        }
+
+        document.getElementById('confirmSubscribeBtn').addEventListener('click', function () {
+            const submitBtn = this;
+            const name = document.getElementById('customerName').value.trim();
+            const email = document.getElementById('customerEmail').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+
+            if (!name || !email || !phone) {
+                showToast('Please fill in all fields', 'error');
+                return;
+            }
+
+            if (name.length < 2) {
+                showToast('Full name must be at least 2 characters', 'error');
+                return;
+            }
+
+            if (!email.includes('@') || !email.includes('.')) {
+                showToast('Please enter a valid email address', 'error');
+                return;
+            }
+
+            if (!/^[0-9]{10}$/.test(phone)) {
+                showToast('Phone number must be exactly 10 digits', 'error');
+                return;
+            }
+
+            if (!selectedPlan.name) {
+                showToast('Please select a plan to subscribe', 'error');
+                return;
+            }
+
+            // Disable button and show loading state
+            submitBtn.disabled = true;
+            const origText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subscribing...';
+
+            const payload = {
+                full_name: name,
+                email: email,
+                phone: phone,
+                plan_name: selectedPlan.name,
+                plan_price: selectedPlan.price
+            };
+
+            fetch('api/subscribe.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast('✅ ' + data.message, 'success');
+                    document.getElementById('customerName').value = '';
+                    document.getElementById('customerEmail').value = '';
+                    document.getElementById('customerPhone').value = '';
+                    closeModal();
+                } else {
+                    showToast('❌ ' + (data.error || 'Failed to submit subscription request.'), 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Subscription error:', error);
+                showToast('❌ Network error. Please check your connection and try again.', 'error');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = origText;
+            });
+        });
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('subscribeModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+
+</html>

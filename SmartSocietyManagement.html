@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>EyeSense | AI-Powered Society Management</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #ffffff;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0a66b9;
+      border-radius: 10px;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: all 0.4s ease;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .navbar.scrolled {
+      background: white;
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.08);
+    }
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo i {
+      font-size: 2rem;
+      color: #0a66b9;
+    }
+    .logo span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #0a66b9, #0f2b3d);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #1e2a3a;
+      transition: 0.3s;
+      font-size: 1rem;
+    }
+    .nav-links a:hover {
+      color: #0a66b9;
+    }
+    .btn-outline {
+      border: 1.5px solid #0a66b9;
+      background: transparent;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 600;
+      color: #0a66b9;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+    .btn-outline:hover {
+      background: #0a66b9;
+      color: white;
+    }
+    .btn-solid {
+      background: #0a66b9;
+      border: none;
+      padding: 0.5rem 1.4rem;
+      border-radius: 40px;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn-solid:hover {
+      background: #084d8c;
+      transform: translateY(-2px);
+    }
+    .mobile-toggle {
+      display: none;
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Hero Section (Mikshi style) */
+    .hero {
+      padding: 9rem 0 5rem;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e9f2fa 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .hero-badge {
+      background: rgba(10,102,185,0.1);
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      color: #0a66b9;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #0b2b3b;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 span {
+      color: #0a66b9;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      color: #2c3e4e;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .hero-image img {
+      width: 100%;
+      border-radius: 32px;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+    }
+
+    /* Section Titles */
+    .section-title {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #0b2b3b;
+    }
+    .section-title p {
+      color: #4a6272;
+      max-width: 650px;
+      margin: 1rem auto 0;
+    }
+
+    /* Features Grid */
+    .features {
+      padding: 5rem 0;
+      background: white;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 2rem;
+    }
+    .feature-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 2rem;
+      transition: all 0.35s ease;
+      border: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: #0a66b9;
+      box-shadow: 0 20px 30px -12px rgba(10,102,185,0.15);
+    }
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(10,102,185,0.08);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .feature-icon i {
+      font-size: 1.8rem;
+      color: #0a66b9;
+    }
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+    }
+    .feature-card p {
+      color: #5a6e7c;
+      line-height: 1.5;
+    }
+    .feature-link {
+      margin-top: 1.2rem;
+      display: inline-block;
+      color: #0a66b9;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* Stats / Trust */
+    .stats {
+      background: #0b2b3b;
+      color: white;
+      padding: 4rem 0;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+    }
+
+    /* Pricing */
+    .pricing {
+      padding: 5rem 0;
+      background: #fafcff;
+    }
+    .pricing-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .pricing-card {
+      background: white;
+      border-radius: 32px;
+      padding: 2rem;
+      flex: 1;
+      min-width: 260px;
+      max-width: 320px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+      transition: 0.3s;
+      border: 1px solid #eef2f6;
+    }
+    .pricing-card.popular {
+      border: 2px solid #0a66b9;
+      position: relative;
+      background: white;
+    }
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #0a66b9;
+      color: white;
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: bold;
+    }
+    .price {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #0b2b3b;
+      margin: 1rem 0;
+    }
+    .pricing-card ul {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+    .pricing-card li {
+      margin: 0.8rem 0;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+    .pricing-card button {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 5rem 0;
+      background: #ffffff;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
+      gap: 2rem;
+    }
+    .testimonial-card {
+      background: #f8fafd;
+      border-radius: 24px;
+      padding: 2rem;
+    }
+    .stars {
+      color: #f5b042;
+      margin-bottom: 1rem;
+    }
+
+    /* Footer */
+    footer {
+      background: #0b2b3b;
+      color: #cddfe7;
+      padding: 3rem 0 2rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+      gap: 2rem;
+    }
+    .footer-col h4 {
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .footer-col ul {
+      list-style: none;
+    }
+    .footer-col li {
+      margin: 0.6rem 0;
+    }
+    .footer-col a {
+      color: #cddfe7;
+      text-decoration: none;
+    }
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid #1f4b62;
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-buttons {
+        justify-content: center;
+      }
+      .nav-links {
+        display: none;
+      }
+      .mobile-toggle {
+        display: block;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 1.2rem;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+    }
+    /* mobile menu panel */
+    .mobile-menu-panel {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      width: 260px;
+      height: 100%;
+      background: white;
+      z-index: 1100;
+      box-shadow: -5px 0 30px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .mobile-menu-panel.open {
+      right: 0;
+    }
+    .overlay-menu {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 1050;
+      display: none;
+    }
+    .overlay-menu.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<div class="navbar" id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <div class="logo">
+        <i class="fas fa-eye"></i>
+        <span>EyeSense</span>
+      </div>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#about">About Us</a>
+        <a href="#contact">Contact</a>
+        <button class="btn-outline">Login</button>
+        <button class="btn-solid">Register</button>
+      </div>
+      <button class="mobile-toggle" id="menuBtn"><i class="fas fa-bars"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu-panel" id="mobilePanel">
+  <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+    <a href="#home" style="text-decoration: none; font-weight: 500;">Home</a>
+    <a href="#features" style="text-decoration: none; font-weight: 500;">Features</a>
+    <a href="#pricing" style="text-decoration: none; font-weight: 500;">Pricing</a>
+    <a href="#about" style="text-decoration: none; font-weight: 500;">About Us</a>
+    <a href="#contact" style="text-decoration: none; font-weight: 500;">Contact</a>
+    <button class="btn-outline" style="margin-top: 1rem;">Login</button>
+    <button class="btn-solid">Register</button>
+  </div>
+</div>
+<div class="overlay-menu" id="overlayMenu"></div>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge"><i class="fas fa-robot"></i> AI-Powered Security & Management</div>
+        <h1>Next-Gen <span>Society Management</span> with EyeSense</h1>
+        <p>Visitor intelligence, automated alerts, complaint tracking — all in one intelligent platform. Used by 500+ residential communities.</p>
+        <div class="hero-buttons">
+          <button class="btn-solid" style="padding: 0.8rem 2rem;">Get started →</button>
+          <button class="btn-outline">Book a demo</button>
+        </div>
+      </div>
+      <!-- <div class="hero-image"> -->
+        <!-- <img src="https://placehold.co/600x400/0a66b9/white?text=EyeSense+Dashboard" alt="EyeSense Dashboard"> -->
+      <!-- </div>  -->
+    </div>
+  </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features">
+  <div class="container">
+    <div class="section-title">
+      <h2>Powerful, All-in-One Features</h2>
+      <p>Everything your community needs for security, communication & operations</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-user-check"></i></div>
+        <h3>Visitor Management</h3>
+        <p>Pre-register guests, digital check-in, real-time host notifications with QR code access.</p>
+        <a href="#" class="feature-link">Learn more →</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-users"></i></div>
+        <h3>Member Management</h3>
+        <p>Centralized database for residents, staff, with role-based access and verification.</p>
+        <a href="#" class="feature-link">Learn more →</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-exclamation-circle"></i></div>
+        <h3>Complaint Tracking</h3>
+        <p>Log, assign, and track complaints with real-time status and SLA management.</p>
+        <a href="#" class="feature-link">Learn more →</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-credit-card"></i></div>
+        <h3>Payment Notifications</h3>
+        <p>Automated reminders for maintenance, rent, dues with payment gateway integrations.</p>
+        <a href="#" class="feature-link">Learn more →</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fab fa-whatsapp"></i></div>
+        <h3>WhatsApp Alerts</h3>
+        <p>Instant alerts for visitors, payments, events — directly on residents' WhatsApp.</p>
+        <a href="#" class="feature-link">Learn more →</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+        <h3>Analytics Dashboard</h3>
+        <p>Insights into visitor patterns, complaint resolution times, and community engagement.</p>
+        <a href="#" class="feature-link">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section (Trust) -->
+<div class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div><div class="stat-number">500+</div><div>Active Communities</div></div>
+      <div><div class="stat-number">2M+</div><div>Visitors Managed</div></div>
+      <div><div class="stat-number">98%</div><div>Satisfaction Rate</div></div>
+      <div><div class="stat-number">24/7</div><div>AI Support</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Pricing Section -->
+<section id="pricing" class="pricing">
+  <div class="container">
+    <div class="section-title">
+      <h2>Flexible Plans for Every Society</h2>
+      <p>Start free, scale as you grow. No hidden fees.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Essential</h3>
+        <div class="price">₹49<span style="font-size:1rem;">/month</span></div>
+        <ul>
+          <li><i class="fas fa-check-circle" style="color:#0a66b9;"></i> Up to 100 members</li>
+          <li><i class="fas fa-check-circle" style="color:#0a66b9;"></i> Visitor management</li>
+          <li><i class="fas fa-check-circle" style="color:#0a66b9;"></i> WhatsApp alerts</li>
+        </ul>
+        <button class="btn-outline">Choose plan</button>
+      </div>
+      <div class="pricing-card popular">
+        <div class="popular-badge">MOST POPULAR</div>
+        <h3>Pro</h3>
+        <div class="price">₹99<span style="font-size:1rem;">/month</span></div>
+        <ul>
+          <li><i class="fas fa-check-circle" style="color:#0a66b9;"></i> Up to 500 members</li>
+          <li><i class="fas fa-check-circle" style="color:#0a66b9;"></i> Full features + analytics</li>
+          <li><i class="fas fa-check-circle" style="color:#0a66b9;"></i> Priority support</li>
+        </ul>
+        <button class="btn-solid">Get started</button>
+      </div>
+      <div class="pricing-card">
+        <h3>Enterprise</h3>
+        <div class="price">Custom</div>
+        <ul>
+          <li><i class="fas fa-check-circle" style="color:#0a66b9;"></i> Unlimited members</li>
+          <li><i class="fas fa-check-circle" style="color:#0a66b9;"></i> Dedicated account manager</li>
+          <li><i class="fas fa-check-circle" style="color:#0a66b9;"></i> API access + SLA</li>
+        </ul>
+        <button class="btn-outline">Contact sales</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="about" class="testimonials">
+  <div class="container">
+    <div class="section-title">
+      <h2>Trusted by Community Leaders</h2>
+      <p>Real results from real societies</p>
+    </div>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p>“EyeSense reduced our visitor check-in time by 70% and complaints are resolved in hours now!”</p>
+        <h4>— Shyam, Secretary</h4>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <p>“WhatsApp alerts have been a lifesaver. Residents feel safer and more connected.”</p>
+        <h4>— Tanushree , Facility Manager</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact / Footer -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4><a href="index.html" style="color: white; text-decoration: none;">EyeSense</a></h4>
+        <p style="margin-top: 10px;"><a href="index.html" style="color: #cddfe7; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#cddfe7'">AI-driven society management platform.</a></p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <ul><li>Features</li><li>Pricing</li><li>Demo</li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul><li>About</li><li>Blog</li><li>Careers</li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul><li>Privacy</li><li>Terms</li></ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>© 2025 EyeSense — Intelligent Society Management. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll navbar effect
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 30) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+  // Mobile menu
+  const menuBtn = document.getElementById('menuBtn');
+  const panel = document.getElementById('mobilePanel');
+  const overlay = document.getElementById('overlayMenu');
+  function closeMenu() {
+    panel.classList.remove('open');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function openMenu() {
+    panel.classList.add('open');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  menuBtn.addEventListener('click', () => {
+    if (panel.classList.contains('open')) closeMenu();
+    else openMenu();
+  });
+  overlay.addEventListener('click', closeMenu);
+  document.querySelectorAll('.mobile-menu-panel a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      closeMenu();
+      const target = link.getAttribute('href');
+      if(target && target !== '#') {
+        e.preventDefault();
+        const el = document.querySelector(target);
+        if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  // smooth scroll for all anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const hash = this.getAttribute('href');
+      if(hash === "#") return;
+      const target = document.querySelector(hash);
+      if(target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, null, hash);
+      }
+    });
+  });
+</script>
+</body>
+</html>

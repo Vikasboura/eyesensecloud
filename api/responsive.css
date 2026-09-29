@@ -1,0 +1,348 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   RESPONSIVE STYLESHEET FOR EYESENSE PHP APPLICATIONS
+   
+   This stylesheet ensures all applications are responsive across:
+   - Mobile devices (320px - 640px)
+   - Tablets (640px - 1024px)
+   - Desktop (1024px - 1600px)
+   - TV/Large screens (1600px+)
+   
+   Use this in conjunction with Tailwind CSS or custom CSS.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Responsive font sizes */
+  --font-xs: clamp(10px, 2vw, 12px);
+  --font-sm: clamp(12px, 2.5vw, 14px);
+  --font-base: clamp(14px, 3vw, 16px);
+  --font-lg: clamp(16px, 3.5vw, 18px);
+  --font-xl: clamp(18px, 4vw, 20px);
+  --font-2xl: clamp(20px, 5vw, 24px);
+  --font-3xl: clamp(22px, 6vw, 28px);
+  
+  /* Responsive spacing */
+  --spacing-xs: clamp(4px, 1vw, 6px);
+  --spacing-sm: clamp(8px, 1.5vw, 12px);
+  --spacing-md: clamp(12px, 2vw, 16px);
+  --spacing-lg: clamp(16px, 2.5vw, 24px);
+  --spacing-xl: clamp(20px, 3vw, 32px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* UNIVERSAL RESPONSIVE BASICS */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+img, video, picture {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* TOUCH-FRIENDLY INTERACTIVE ELEMENTS */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+button, a[role="button"], input[type="button"], input[type="submit"] {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile-friendly input sizing */
+input, textarea, select {
+  min-height: 44px;
+  padding: 10px 12px;
+  font-size: 16px; /* Prevents auto-zoom on iOS */
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* RESPONSIVE TYPOGRAPHY */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+h1 { font-size: var(--font-3xl); line-height: 1.2; margin-bottom: 0.5em; }
+h2 { font-size: var(--font-2xl); line-height: 1.3; margin-bottom: 0.6em; }
+h3 { font-size: var(--font-xl); line-height: 1.4; margin-bottom: 0.7em; }
+h4 { font-size: var(--font-lg); line-height: 1.4; margin-bottom: 0.8em; }
+p  { font-size: var(--font-base); line-height: 1.6; margin-bottom: 1em; }
+small { font-size: var(--font-xs); }
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* RESPONSIVE TABLES */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px; /* Prevent table from being too cramped */
+}
+
+thead th {
+  padding: 12px;
+  text-align: left;
+  white-space: nowrap;
+  font-size: var(--font-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+tbody td {
+  padding: 10px 12px;
+  font-size: var(--font-sm);
+  vertical-align: middle;
+}
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* RESPONSIVE FORMS */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* RESPONSIVE CONTAINERS */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.container-lg {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* MEDIA QUERIES - MOBILE FIRST APPROACH */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+/* Mobile (320px - 640px) */
+@media (max-width: 640px) {
+  html, body { font-size: 14px; }
+  
+  h1 { margin-bottom: 0.8em; }
+  h2 { margin-bottom: 0.9em; }
+  
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  /* Stack buttons vertically on mobile */
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  button, a[role="button"] {
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Adjust padding on mobile */
+  .container, .container-lg {
+    padding: 12px;
+  }
+  
+  /* Reduce table font on mobile */
+  table { font-size: 12px; }
+  thead th { padding: 8px; }
+  tbody td { padding: 8px; }
+}
+
+/* Tablet (640px - 1024px) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop (1024px - 1600px) */
+@media (min-width: 1024px) {
+  .form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+  
+  .form-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* TV/Large screens (1600px+) */
+@media (min-width: 1600px) {
+  .container, .container-lg {
+    max-width: 1400px;
+    padding: 24px;
+  }
+  
+  .content-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* LANDSCAPE MODE - Mobile */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  h1 { margin-bottom: 0.3em; }
+  h2 { margin-bottom: 0.4em; }
+  p { margin-bottom: 0.5em; }
+  
+  input, button {
+    min-height: 40px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* HIGH RESOLUTION DISPLAYS (Retina) */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+}
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* BROWSER COMPATIBILITY */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+/* Safari specific */
+@supports (-webkit-touch-callout: none) {
+  input[type="date"], input[type="time"], input[type="datetime-local"] {
+    padding: 8px 12px;
+  }
+}
+
+/* Firefox */
+@-moz-document url-prefix() {
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* UTILITY CLASSES */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+.hidden-mobile { display: none; }
+.hidden-tablet { display: block; }
+.hidden-desktop { display: block; }
+
+@media (min-width: 640px) {
+  .hidden-mobile { display: block; }
+}
+
+@media (min-width: 1024px) {
+  .hidden-tablet { display: none; }
+}
+
+@media (min-width: 1024px) {
+  .hidden-desktop { display: none; }
+}
+
+.flex-center { display: flex; align-items: center; justify-content: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.flex-column { display: flex; flex-direction: column; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+
+.gap-xs { gap: var(--spacing-xs); }
+.gap-sm { gap: var(--spacing-sm); }
+.gap-md { gap: var(--spacing-md); }
+.gap-lg { gap: var(--spacing-lg); }
+.gap-xl { gap: var(--spacing-xl); }
+
+.p-xs { padding: var(--spacing-xs); }
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+.p-xl { padding: var(--spacing-xl); }
+
+.m-xs { margin: var(--spacing-xs); }
+.m-sm { margin: var(--spacing-sm); }
+.m-md { margin: var(--spacing-md); }
+.m-lg { margin: var(--spacing-lg); }
+.m-xl { margin: var(--spacing-xl); }
+
+/* ─────────────────────────────────────────────────────────────────────── */
+/* PRINT STYLES */
+/* ─────────────────────────────────────────────────────────────────────── */
+
+@media print {
+  body { background: white; color: black; }
+  button, .no-print { display: none; }
+  table { page-break-inside: avoid; }
+  tr { page-break-inside: avoid; }
+}

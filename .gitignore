@@ -1,0 +1,21 @@
+api/db.php
+/.vscode/
+.env
+.env.*
+*.env
+!.env.example
+
+# Uploads
+uploads/
+api/uploads/*
+!api/uploads/**/index.html
+!api/uploads/**/.gitkeep
+api/uploads/society_logos/*
+!api/uploads/society_logos/index.html
+!api/uploads/society_logos/.gitkeep
+
+# Aplication logs
+api/logs/*
+
+# Temp files
+cookies.txt

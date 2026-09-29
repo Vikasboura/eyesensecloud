@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>EyeSense | Page Not Found</title>
+    <meta name="description" content="The page you are looking for could not be found. EyeSense — intelligent vision, precision sensing.">
+    <!-- Preload subtle gradient & smooth rendering -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: radial-gradient(circle at 10% 20%, rgba(10, 20, 30, 1) 0%, rgba(0, 5, 12, 1) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated scanning line / eye-like background effect */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(0, 255, 255, 0.02) 0px,
+                rgba(0, 255, 255, 0.02) 2px,
+                transparent 2px,
+                transparent 8px
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* pulsing glow orbs (eye-inspired) */
+        .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.3;
+            z-index: 0;
+            animation: floatGlow 12s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(0, 180, 255, 0.4), rgba(0, 80, 150, 0));
+            top: -20vh;
+            left: -10vw;
+        }
+
+        .orb-2 {
+            width: 35vw;
+            height: 35vw;
+            background: radial-gradient(circle, rgba(80, 200, 255, 0.3), rgba(0, 40, 80, 0));
+            bottom: -15vh;
+            right: -5vw;
+            animation-duration: 15s;
+        }
+
+        .orb-3 {
+            width: 25vw;
+            height: 25vw;
+            background: radial-gradient(circle, rgba(0, 230, 200, 0.25), rgba(0, 100, 100, 0));
+            top: 40%;
+            left: 30%;
+            animation-duration: 18s;
+            filter: blur(80px);
+        }
+
+        @keyframes floatGlow {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0.2;
+            }
+            100% {
+                transform: translate(5%, 5%) scale(1.2);
+                opacity: 0.4;
+            }
+        }
+
+        /* main card container */
+        .error-container {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            width: 100%;
+            background: rgba(8, 18, 28, 0.75);
+            backdrop-filter: blur(12px);
+            border-radius: 56px;
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 255, 255, 0.1) inset;
+            padding: 2.5rem 2rem 3rem;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .error-container:hover {
+            box-shadow: 0 35px 55px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 255, 210, 0.4) inset;
+            transform: translateY(-3px);
+        }
+
+        /* logo area with eye motif */
+        .logo-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .eye-icon {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(145deg, #0a2b38, #02131c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.5), 0 0 15px rgba(0, 210, 255, 0.3);
+            animation: subtlePulse 3s infinite;
+        }
+
+        @keyframes subtlePulse {
+            0% { box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.4), 0 0 8px rgba(0, 210, 255, 0.2);}
+            50% { box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.8), 0 0 22px rgba(0, 210, 255, 0.6);}
+            100% { box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.4), 0 0 8px rgba(0, 210, 255, 0.2);}
+        }
+
+        .eye-icon svg {
+            width: 32px;
+            height: 32px;
+            filter: drop-shadow(0 0 2px cyan);
+        }
+
+        .brand {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #FFFFFF, #88ddff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 8px rgba(0,200,255,0.3);
+        }
+
+        /* 404 core */
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            line-height: 1;
+            margin: 1rem 0 0.5rem;
+            background: linear-gradient(125deg, #0ff, #3e8eff, #0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0,255,255,0.4);
+            letter-spacing: 6px;
+        }
+
+        .glitch-text {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #eef5ff;
+            margin-bottom: 0.75rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .message {
+            font-size: 1.1rem;
+            color: #b0e0ff;
+            background: rgba(0, 30, 40, 0.6);
+            padding: 0.75rem 1.5rem;
+            border-radius: 60px;
+            display: inline-block;
+            backdrop-filter: blur(4px);
+            margin: 1rem auto;
+            font-weight: 500;
+            border: 0.5px solid rgba(0, 255, 200, 0.4);
+        }
+
+        .description {
+            color: #9bb8d4;
+            max-width: 500px;
+            margin: 1rem auto 1.5rem;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        /* scanning line effect */
+        .scan-line {
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #0ff, transparent);
+            margin: 20px auto 20px;
+            animation: scanMove 2.2s infinite ease;
+            border-radius: 2px;
+        }
+
+        @keyframes scanMove {
+            0% { width: 0px; opacity: 0; }
+            30% { width: 140px; opacity: 1; }
+            70% { width: 140px; opacity: 1; }
+            100% { width: 0px; opacity: 0; margin-left: auto; margin-right: auto;}
+        }
+
+        /* button group */
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0.75rem 1.8rem;
+            border-radius: 48px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            background: rgba(10, 25, 35, 0.8);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            color: #d4f1ff;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(105deg, #0b3b49, #02232e);
+            border: 1px solid #0cf;
+            box-shadow: 0 2px 8px rgba(0, 200, 255, 0.2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(105deg, #0f4e60, #043b48);
+            border-color: #3efffa;
+            box-shadow: 0 5px 15px rgba(0, 210, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 200, 220, 0.15);
+            border-color: #0ff;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* footer suggestion */
+        .footer-note {
+            margin-top: 2.5rem;
+            font-size: 0.7rem;
+            color: #4f7e9e;
+            letter-spacing: 0.3px;
+            border-top: 1px dashed rgba(0, 200, 200, 0.2);
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-note span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ip / path display (dynamic for debugging, but clean) */
+        .request-path {
+            background: rgba(0, 20, 30, 0.7);
+            border-radius: 32px;
+            font-size: 0.75rem;
+            padding: 0.25rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: monospace;
+            margin-top: 10px;
+            color: #8bb9da;
+            border: 0.5px solid rgba(0, 200, 210, 0.3);
+        }
+
+        svg.icon-small {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        @media (max-width: 550px) {
+            .error-container {
+                padding: 1.5rem;
+            }
+            .error-code {
+                font-size: 5rem;
+            }
+            .glitch-text {
+                font-size: 1.2rem;
+            }
+            .brand {
+                font-size: 1.6rem;
+            }
+            .eye-icon {
+                width: 42px;
+                height: 42px;
+            }
+        }
+
+        /* subtle animated aperture effect */
+        @keyframes blinkHint {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .lens-flare {
+            position: absolute;
+            top: 15%;
+            right: 5%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(0,255,255,0.08) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="glow-orb orb-1"></div>
+<div class="glow-orb orb-2"></div>
+<div class="glow-orb orb-3"></div>
+<div class="lens-flare"></div>
+
+<div class="error-container">
+    <div class="logo-area">
+        <div class="eye-icon">
+            <!-- EyeSense inspired eye icon: stylized iris & pupil -->
+            <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="16" cy="16" r="12" stroke="url(#eyeGrad)" stroke-width="1.5" fill="none"/>
+                <circle cx="16" cy="16" r="8" fill="#0cf" fill-opacity="0.2" stroke="#0ff" stroke-width="0.8"/>
+                <circle cx="16" cy="16" r="3" fill="#ffffff" fill-opacity="0.95" stroke="#0aa" stroke-width="0.5"/>
+                <defs>
+                    <linearGradient id="eyeGrad" x1="4" y1="8" x2="28" y2="24" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#0ff"/>
+                        <stop offset="1" stop-color="#3a86ff"/>
+                    </linearGradient>
+                </defs>
+                <path d="M8 12 L12 14 M24 12 L20 14" stroke="#0ff" stroke-width="1.2" stroke-linecap="round" opacity="0.6"/>
+            </svg>
+        </div>
+        <span class="brand">EyeSense</span>
+    </div>
+
+    <div class="error-code">404</div>
+    <div class="glitch-text">SIGHT MISALIGNED</div>
+    <div class="scan-line"></div>
+
+    <div class="message">⚠ The requested address is not within our visual field</div>
+    
+    <div class="description">
+        Our intelligent sensing systems cannot locate the resource you're looking for. 
+        The path may have been moved, deleted, or never existed. <br>
+        Check the address for typos or navigate using the options below.
+    </div>
+
+    <!-- Dynamic requested path indicator (shows current invalid URL, privacy-friendly) -->
+    <div class="request-path" id="invalidPathDisplay">
+        <svg class="icon-small" viewBox="0 0 24 24" width="14" height="14">
+            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" fill="none"/>
+            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" fill="none"/>
+        </svg>
+        <span id="currentPath">Fetching address...</span>
+    </div>
+
+    <div class="action-buttons">
+        <a href="/" class="btn btn-primary" id="homeLink">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2h-5v-8H9v8H5a2 2 0 0 1-2-2z"/>
+            </svg>
+            Back to Home
+        </a>
+        <a href="#" class="btn btn-outline" id="refreshBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            Try Reload
+        </a>
+        <a href="/contact" class="btn btn-outline" id="contactSense">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+            </svg>
+            Report broken link
+        </a>
+    </div>
+
+    <div class="footer-note">
+        <span>🔍 EyeSense · Precision Imaging</span>
+        <span>⚡ 360° visual intelligence</span>
+        <span id="timeRef"></span>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // Get current invalid URL / path (displayed in a user friendly way)
+        const fullUrl = window.location.href;
+        let displayPath = fullUrl;
+        try {
+            // Clean display — show relative + origin for clarity but not too verbose
+            const urlObj = new URL(fullUrl);
+            let pathDisplay = urlObj.pathname + urlObj.search + urlObj.hash;
+            if (!pathDisplay || pathDisplay === '/') pathDisplay = '/ (root path missing resource)';
+            displayPath = `📍 ${urlObj.origin}${pathDisplay}`;
+        } catch(e) {
+            displayPath = `⚠ ${fullUrl.substring(0, 70)}`;
+        }
+        const pathSpan = document.getElementById('currentPath');
+        if (pathSpan) {
+            pathSpan.textContent = displayPath;
+            // add micro interaction: tooltip style
+            pathSpan.title = "The exact address that caused this 404 error";
+        }
+
+        // Helper to handle clicks for "Try Reload" – reload current page
+        const refreshBtn = document.getElementById('refreshBtn');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.reload();
+            });
+        }
+
+        // Home link: keep default behavior but ensure it points to root (absolute or relative)
+        const homeLink = document.getElementById('homeLink');
+        if (homeLink && homeLink.getAttribute('href') === '/') {
+            // fine, maybe enhance with smooth preload hint
+            homeLink.addEventListener('click', (e) => {
+                // optional: add small tracking or just let default
+            });
+        }
+
+        // "Report broken link" – simulate showing a toast or console message
+        const reportLink = document.getElementById('contactSense');
+        if (reportLink) {
+            reportLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Gentle interactive feedback: show a small notification (inline)
+                const existingToast = document.querySelector('.dynamic-toast');
+                if (existingToast) existingToast.remove();
+                
+                const toast = document.createElement('div');
+                toast.className = 'dynamic-toast';
+                toast.innerText = '📡 Signal sent: EyeSense support notified of missing visual path.';
+                toast.style.position = 'fixed';
+                toast.style.bottom = '20px';
+                toast.style.left = '50%';
+                toast.style.transform = 'translateX(-50%)';
+                toast.style.background = '#0a2b2f';
+                toast.style.backdropFilter = 'blur(12px)';
+                toast.style.color = '#bbf0ff';
+                toast.style.padding = '10px 20px';
+                toast.style.borderRadius = '100px';
+                toast.style.border = '1px solid #0cf';
+                toast.style.fontSize = '0.8rem';
+                toast.style.fontWeight = '500';
+                toast.style.zIndex = '999';
+                toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+                toast.style.fontFamily = 'inherit';
+                document.body.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    setTimeout(() => toast.remove(), 500);
+                }, 2800);
+            });
+        }
+
+        // extra flair: add timestamp (sense of live system)
+        const timeSpan = document.getElementById('timeRef');
+        if (timeSpan) {
+            const now = new Date();
+            const formatted = now.toLocaleTimeString([], { hour: '2-digit', minute:'2-digit', second:'2-digit' });
+            timeSpan.innerHTML = `🕒 ${formatted} UTC${now.toString().match(/GMT[+-]\d+/)?.[0] || ''}`;
+        }
+
+        // if any internal router hash change or dynamic, not needed but nice to update path
+        // also check if current page contains 'redirect' meta logic? Not needed. 
+        // Additional interactive: subtle hint to user that wrong address
+        const container = document.querySelector('.error-container');
+        const glitchEl = document.querySelector('.glitch-text');
+        if (glitchEl) {
+            setInterval(() => {
+                // add a tiny glimmer effect to the glitch text
+                glitchEl.style.textShadow = '0px 0px 3px cyan';
+                setTimeout(() => {
+                    if (glitchEl) glitchEl.style.textShadow = '';
+                }, 200);
+            }, 4000);
+        }
+
+        // Analytics & SEO: No extra redirect, but we can push a soft fake 'tracking' to console but clean
+        console.info(`EyeSense 404 | The resource at "${window.location.pathname}" was not recognized by our address sensors.`);
+    })();
+</script>
+
+<!-- additional style for dynamic toast / ensure responsive -->
+<style>
+    .dynamic-toast {
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+        font-family: 'Inter', system-ui, monospace;
+        letter-spacing: 0.3px;
+    }
+    a, button {
+        cursor: pointer;
+    }
+    .btn-outline {
+        background: rgba(0, 30, 40, 0.5);
+    }
+    .request-path {
+        word-break: break-all;
+        max-width: 100%;
+        display: inline-flex;
+        justify-content: center;
+        white-space: normal;
+        text-align: center;
+    }
+    @keyframes softGlow {
+        0% { border-color: rgba(0, 200, 255, 0.3); }
+        100% { border-color: rgba(0, 200, 255, 0.7); }
+    }
+    .error-container {
+        animation: softGlow 3s infinite alternate;
+    }
+</style>
+</body>
+</html>

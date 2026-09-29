@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>EyeSense | Corporate Offices Solution</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-header: rgba(255, 255, 255, 0.98);
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --card-bg: #ffffff;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      --btn-primary: #2563eb;
+      --btn-primary-hover: #1d4ed8;
+      --btn-outline-border: #2563eb;
+      --hero-bg: linear-gradient(135deg, #eff6ff 0%, #f8fafc 100%);
+      --footer-bg: #0f2b3d;
+}
+
+    body.dark {
+      --bg-primary: #0f172a;
+      --bg-secondary: #020617;
+      --bg-header: rgba(15, 23, 42, 0.98);
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+      --card-bg: #1e293b;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      --btn-primary: #3b82f6;
+      --btn-primary-hover: #2563eb;
+      --btn-outline-border: #3b82f6;
+      --hero-bg: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      --footer-bg: #020617;
+}
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--btn-primary);
+      border-radius: 10px;
+    }
+
+    .header {
+      background: var(--bg-header);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo i {
+      font-size: 2rem;
+      color: var(--btn-primary);
+    }
+
+    .logo span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--btn-primary), #7c3aed);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-menu a,
+    .dropdown-btn {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.85rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0.5rem 0;
+      transition: color 0.3s;
+    }
+
+    .nav-menu a:hover,
+    .dropdown-btn:hover {
+      color: var(--btn-primary);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dropdown-content {
+      position: absolute;
+      top: 35px;
+      left: -20px;
+      background: var(--card-bg);
+      min-width: 220px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+      border-radius: 16px;
+      padding: 0.6rem 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 100;
+      border: 1px solid var(--border-color);
+    }
+
+    .dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 0.7rem 1.3rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+      background: var(--bg-secondary);
+      color: var(--btn-primary);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--btn-outline-border);
+      background: transparent;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      color: var(--btn-primary);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .btn-outline:hover {
+      background: var(--btn-primary);
+      color: white;
+    }
+
+    .btn-solid {
+      background: var(--btn-primary);
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border-radius: 40px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+
+    .btn-solid:hover {
+      background: var(--btn-primary-hover);
+    }
+
+    .theme-toggle {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: 40px;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-size: 0.85rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 9rem 0 6rem;
+      background: var(--hero-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero-text h1 span {
+      color: var(--btn-primary);
+    }
+
+    .hero-text p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--btn-primary);
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    /* Animation Container */
+    .animation-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      height: 320px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .terminal-kiosk {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 160px;
+      border: 2px dashed rgba(37, 99, 235, 0.2);
+      border-radius: 16px;
+      background: var(--bg-secondary);
+      position: relative;
+      z-index: 2;
+    }
+
+    .corporate-card {
+      width: 90px;
+      height: 60px;
+      background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+      border-radius: 6px;
+      padding: 8px;
+      color: white;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      animation: card-tap 5s infinite ease-in-out;
+      z-index: 5;
+    }
+
+    @keyframes card-tap {
+      0% {
+        transform: translateY(70px) rotate(-15deg);
+        opacity: 0;
+      }
+
+      25%,
+      55% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 1;
+      }
+
+      75%,
+      100% {
+        transform: translateY(-70px) rotate(15deg);
+        opacity: 0;
+      }
+    }
+
+    .card-logo {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .card-chip {
+      width: 14px;
+      height: 12px;
+      background: #fbbf24;
+      border-radius: 2px;
+    }
+
+    .scanner-glow {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, transparent 70%);
+      opacity: 0;
+      z-index: 4;
+      animation: glow-tap 5s infinite ease-in-out;
+    }
+
+    @keyframes glow-tap {
+
+      0%,
+      24% {
+        opacity: 0;
+      }
+
+      25%,
+      45% {
+        opacity: 1;
+      }
+
+      50%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .camera-hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .hud-tag {
+      background: rgba(37, 99, 235, 0.1);
+      color: var(--btn-primary);
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .hud-blink {
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: blink 1s infinite alternate;
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 0.3;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .telemetry-logs {
+      z-index: 10;
+      font-family: monospace;
+      font-size: 0.75rem;
+      background: rgba(0, 0, 0, 0.03);
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    body.dark .telemetry-logs {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Stats Section */
+    .stats {
+      background: var(--bg-secondary);
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: var(--btn-primary);
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-top: 0.4rem;
+    }
+
+    /* Grid Sections */
+    .section-title {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .section-title p {
+      color: var(--text-secondary);
+      max-width: 650px;
+      margin: 1rem auto 0;
+      font-size: 1.05rem;
+    }
+
+    .features {
+      padding: 6rem 0;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 2.5rem;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--btn-primary);
+    }
+
+    .feature-icon {
+      width: 50px;
+      height: 50px;
+      background: rgba(37, 99, 235, 0.08);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      color: var(--btn-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Success Story */
+    .success-story {
+      background: var(--bg-secondary);
+      border-radius: 30px;
+      padding: 3.5rem;
+      border: 1px solid var(--border-color);
+      margin: 4rem 0;
+    }
+
+    .success-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #eab308;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 6rem 0;
+      background: var(--bg-secondary);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .testimonial-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .testimonial-card p {
+      font-style: italic;
+      color: var(--text-secondary);
+      margin: 1rem 0;
+    }
+
+    .stars {
+      color: #eab308;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+      color: white;
+      border-radius: 30px;
+      padding: 4rem;
+      text-align: center;
+      margin: 5rem 0;
+    }
+
+    .cta-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+            /* Footer */
+    footer {
+      background: var(--footer-bg, #020617);
+      color: #94a3b8;
+      padding: 3rem 0 2rem;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      transition: background-color 0.3s ease;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-grid h4 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .footer-grid p {
+      color: #94a3b8;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-grid li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-grid a {
+      color: #94a3b8;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-grid a:hover {
+      color: white;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #1e4a6e;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header" id="navbar">
+    <div class="container">
+      <div class="navbar">
+        <a href="../index.html" class="logo"><i class="fas fa-eye"></i><span>EyeSense</span></a>
+        <div class="nav-menu">
+          <a href="../index.html">Home</a>
+          <div class="dropdown">
+            <button class="dropdown-btn">Features <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="../features/ai-surveillance.html">AI Surveillance</a>
+              <a href="../features/visitor-management.html">Visitor Management</a>
+              <a href="../features/society-management.html"> Society Management</a>
+              <a href="../features/security-operations.html"> Security Operations</a>
+              <a href="../features/payment-billing.html">Payment & Billing</a>
+              <a href="../features/smart-notifications.html">Smart Notifications</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="dropdown-btn">Solutions <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="../solutions/residential.html"> Residential Societies</a>
+              <a href="../solutions/commercial.html"> Commercial Buildings</a>
+              <a href="../solutions/education.html"> Schools & Colleges</a>
+              <a href="../solutions/healthcare.html"> Hospitals</a>
+              <a href="../solutions/manufacturing.html"> Factories & Warehouses</a>
+              <a href="../solutions/retail.html"> Retail Stores</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="dropdown-btn">Industries <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="residential-industry.html">Residential Societies</a>
+              <a href="healthcare-industry.html">Healthcare Industries</a>
+              <a href="education-industry.html">Education Societies</a>
+              <a href="manufacturing-industry.html">Manufacturing Industries</a>
+              <a href="logistics-industry.html">Logistics Industries</a>
+              <a href="corporate-industry.html">Corporate Offices</a>
+            </div>
+          </div>
+          <a href="../pricing.html">Pricing</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="../index.html#request-demo">Request Demo</a>
+          <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i> Theme</button>
+          <a href="../login.php">Login</a>
+          <a href="../signup.html">Sign Up</a>
+          <div class="dropdown download-dropdown">
+            <button class="btn-download"
+              style="padding: 0.4rem 1rem; border-radius: 40px; border: none; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; background: #2b32b5; color: white;">
+              <i class="fas fa-download"></i> Download
+            </button>
+            <div class="dropdown-content" style="min-width: 180px; left: auto; right: 0;">
+              <a href="https://indsac.cloudtb.online/Eyesense.exe" download><i class="fas fa-download"></i> Download for
+                Windows</a>
+              <a href="https://indsac.cloudtb.online/u/download/prod/Eyesense.apk" download><i
+                  class="fab fa-android" style="color: #2b32b5;"></i> Android APK</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-text">
+          <span class="hero-badge"><i class="fas fa-building"></i> Corporate Offices</span>
+          <h1>Enterprise Security & <span>Workplace Intelligence</span></h1>
+          <p>Unify entry access credentials across multiple towers. Integrate real-time biometric checks, Server Room
+            vault audits, occupancy metrics, and visitor passes.</p>
+          <div class="hero-buttons">
+            <a href="../index.html#request-demo" class="btn-solid">Book Demo →</a>
+            <a href="#challenges" class="btn-outline">Learn More</a>
+          </div>
+        </div>
+        <div class="hero-media">
+          <div class="animation-container">
+            <div class="camera-hud">
+              <span class="hud-tag">LOBBY_GATE_K1</span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <div class="hud-blink"></div>
+                <span class="hud-tag" style="background:#10b981; color:white;">ACTIVE</span>
+              </div>
+            </div>
+            <div class="terminal-kiosk">
+              <div class="scanner-glow"></div>
+              <div class="corporate-card">
+                <div class="card-logo">EYESENSE ID</div>
+                <div class="card-chip"></div>
+              </div>
+            </div>
+            <div class="telemetry-logs" id="telemetryLogs">
+              [16:48:10] > Terminal Online. Waiting for card tap.<br>
+              [16:48:14] > Status: Ready.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-col">
+          <div class="stat-number">99.9%</div>
+          <div class="stat-label">Access Compliance</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-number">80%</div>
+          <div class="stat-label">Visitor Wait Reduction</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-number">35%</div>
+          <div class="stat-label">Space Optimization</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-number">10k+</div>
+          <div class="stat-label">Daily Occupants Secured</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="challenges">
+    <div class="container">
+      <div class="section-title">
+        <h2>Corporate Industry Challenges</h2>
+        <p>Tracking contractor access credentials, protecting R&D server vaults, and measuring layout usage manually is
+          highly ineffective.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-id-badge"></i></div>
+          <h3>Access Verification</h3>
+          <p>Unlogged contractor entries, credential tailgating, and manual logs at reception gates cause overheads.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-laptop-code"></i></div>
+          <h3>Server Room Security</h3>
+          <p>Lack of instant alerts or biometrics audits on critical server rooms and data assets.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-chart-pie"></i></div>
+          <h3>Meeting Room Bullying</h3>
+          <p>Booked rooms remaining empty while other teams lack meeting spots, generating operational chaos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-title">
+        <h2>EyeSense Solution</h2>
+        <p>A unified building operating console for property managers and enterprise tenants.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-fingerprint"></i></div>
+          <h3>Biometric Turnstile Sweeps</h3>
+          <p>Link physical turnstile access directly to face recognition check-in databases, preventing card transfers.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-network-wired"></i></div>
+          <h3>Vault Bounding-Boxes</h3>
+          <p>CCTV feeds generate alerts the moment unauthorized personnel step inside Server Room geofence boxes.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+          <h3>Occupancy Space Analytics</h3>
+          <p>Measure layout usage dynamically, helping committees optimize desk grids and save energy costs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="success-story">
+      <div class="success-badge"><i class="fas fa-star"></i> Customer Success Story</div>
+      <h2>Global Tech Park</h2>
+      <p style="margin: 1.5rem 0; line-height: 1.7; font-size: 1.1rem; color: var(--text-secondary);">
+        "Securing 1.5 million sq.ft. of office space across multiple corporate tenants with manual registers was a
+        security headache. EyeSense turnstile integrations and Server Room geofencing achieved 99.9% access compliance,
+        cut reception wait times by 80%, and optimized floor space by 35%."
+      </p>
+      <div style="font-weight: 700; color: var(--btn-primary);">Result: 10,000+ daily employee logins verified
+        automatically.</div>
+    </div>
+  </div>
+
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-title">
+        <h2>Administrative Reviews</h2>
+        <p>Trusted by corporate directors and administrative leaders.</p>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+              class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <p>"The security audit logs for server room entries solved our SOC2 certification checklist instantly."</p>
+          <h4 style="margin-top: 1rem;">— Mr. Rahul V., IT Director</h4>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+              class="fas fa-star"></i><i class="fas fa-star"></i></div>
+          <p>"Reception QR passes cut registration wait times for visiting clients completely."</p>
+          <h4 style="margin-top: 1rem;">— Mrs. Kiran P., Admin Lead</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="cta-section">
+      <h2>Secure Your Corporate Office Today</h2>
+      <p style="margin: 1rem 0 2rem; opacity: 0.9;">Consult with our workplace safety integration experts.</p>
+      <a href="../index.html#request-demo" class="btn-solid"
+        style="background: white; color: var(--btn-primary);">Request Free Demo</a>
+    </section>
+  </div>
+
+    <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4><a href="../index.html" style="color: white; text-decoration: none;">EyeSense</a></h4>
+          <p><a href="../index.html">AI-driven security platform</a></p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul>
+            <li><a href="../features/ai-surveillance.html">AI Surveillance</a></li>
+            <li><a href="../features/visitor-management.html">Visitor Management</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Solutions</h4>
+          <ul>
+            <li><a href="../solutions/residential.html">Residential</a></li>
+            <li><a href="../solutions/commercial.html">Commercial</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> eyesense@indsac.com</p>
+          <p><i class="fas fa-phone"></i> +91 76 7628 9081</p>
+        </div>
+      </div>
+      <div class="copyright">© 2026 EyeSense. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    });
+    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+
+    // Dynamic Kiosk Card Telemetry logs
+    const telemetryLogs = document.getElementById('telemetryLogs');
+    let cycle = 0;
+    setInterval(() => {
+      cycle = (cycle + 1) % 3;
+      if (cycle === 0) {
+        telemetryLogs.innerHTML = `[${new Date().toLocaleTimeString()}] > Waiting for card scan...`;
+      } else if (cycle === 1) {
+        telemetryLogs.innerHTML = `[${new Date().toLocaleTimeString()}] > ID Tapped: EMP-1478 (Rahul Verma)<br>[${new Date().toLocaleTimeString()}] > Access: GRANTED (Dept: Engineering).`;
+      } else {
+        telemetryLogs.innerHTML = `[${new Date().toLocaleTimeString()}] > ID Tapped: EMP-2541 (Priya Roy)<br>[${new Date().toLocaleTimeString()}] > Access: GRANTED (Dept: Design).`;
+      }
+    }, 5000);
+  </script>
+</body>
+
+</html>

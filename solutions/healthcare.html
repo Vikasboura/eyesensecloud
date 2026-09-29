@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>EyeSense | Healthcare Solutions</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    }
+
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f8fafc;
+      --bg-header: rgba(255, 255, 255, 0.98);
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --card-bg: #ffffff;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      --btn-primary: #2563eb;
+      --btn-primary-hover: #1d4ed8;
+      --btn-outline-border: #2563eb;
+      --footer-bg: #0f2b3d;
+}
+
+    body.dark {
+      --bg-primary: #0f172a;
+      --bg-secondary: #020617;
+      --bg-header: rgba(15, 23, 42, 0.98);
+      --text-primary: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border-color: #1e293b;
+      --card-bg: #1e293b;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+      --btn-primary: #3b82f6;
+      --btn-primary-hover: #2563eb;
+      --btn-outline-border: #3b82f6;
+      --footer-bg: #020617;
+}
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--btn-primary);
+      border-radius: 10px;
+    }
+
+    .header {
+      background: var(--bg-header);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .header.scrolled {
+      background: var(--bg-header);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 0;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo i {
+      font-size: 2rem;
+      color: var(--btn-primary);
+    }
+
+    .logo span {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--btn-primary), #7c3aed);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-menu a,
+    .dropdown-btn {
+      text-decoration: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.85rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      padding: 0.5rem 0;
+      transition: color 0.3s;
+    }
+
+    .nav-menu a:hover,
+    .dropdown-btn:hover {
+      color: var(--btn-primary);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dropdown-content {
+      position: absolute;
+      top: 35px;
+      left: -20px;
+      background: var(--card-bg);
+      min-width: 220px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+      border-radius: 16px;
+      padding: 0.6rem 0;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 100;
+      border: 1px solid var(--border-color);
+    }
+
+    .dropdown:hover .dropdown-content {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 0.7rem 1.3rem;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+      background: var(--bg-secondary);
+      color: var(--btn-primary);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--btn-outline-border) !important;
+      background: transparent !important;
+      padding: 0.4rem 1rem !important;
+      border-radius: 40px !important;
+      color: var(--btn-outline-border) !important;
+      font-weight: 600 !important;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 0.85rem !important;
+      transition: all 0.3s;
+    }
+
+    .btn-outline:hover {
+      background: var(--btn-primary) !important;
+      color: white !important;
+    }
+
+    .btn-solid {
+      background: var(--btn-primary) !important;
+      color: white !important;
+      padding: 0.4rem 1rem !important;
+      border-radius: 40px !important;
+      border: none !important;
+      font-weight: 600 !important;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 0.85rem !important;
+      transition: all 0.3s;
+    }
+
+    .btn-solid:hover {
+      background: var(--btn-primary-hover) !important;
+      transform: translateY(-2px);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border-color);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      cursor: pointer;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-secondary);
+      border-color: var(--btn-primary);
+    }
+
+    .mobile-toggle {
+      display: none;
+      font-size: 1.8rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 9rem 0 5rem;
+      background: linear-gradient(135deg, #f0f9ff 0%, #e9f2fa 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    body.dark .hero {
+      background: linear-gradient(135deg, #020617 0%, #0b1528 100%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-badge {
+      background: rgba(10, 102, 185, 0.1);
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      color: #0a66b9;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 span {
+      color: #0a66b9;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Restricted Zone Access Guard Storyboard Animation */
+    .animation-container {
+      width: 100%;
+      height: 320px;
+      background: var(--bg-secondary);
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .healthcare-scene {
+      width: 85%;
+      height: 65%;
+      position: relative;
+      background: linear-gradient(to bottom, rgba(37, 99, 235, 0.03) 0%, rgba(37, 99, 235, 0.01) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .secure-door-frame {
+      width: 140px;
+      height: 120px;
+      border: 4px solid var(--text-muted);
+      border-bottom: none;
+      position: relative;
+      background: rgba(0, 0, 0, 0.1);
+      perspective: 400px;
+    }
+
+    .secure-door-leaf {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(135deg, #475569, #334155);
+      border: 2px solid var(--text-muted);
+      transition: transform 0.6s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      transform-style: preserve-3d;
+    }
+
+    .door-left {
+      left: 0;
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      transform-origin: left;
+      animation: door-open-left 8s infinite ease-in-out;
+    }
+
+    .door-right {
+      right: 0;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      transform-origin: right;
+      animation: door-open-right 8s infinite ease-in-out;
+    }
+
+    @keyframes door-open-left {
+
+      0%,
+      59% {
+        transform: rotateY(0deg);
+      }
+
+      65%,
+      85% {
+        transform: rotateY(-95deg);
+      }
+
+      92%,
+      100% {
+        transform: rotateY(0deg);
+      }
+    }
+
+    @keyframes door-open-right {
+
+      0%,
+      59% {
+        transform: rotateY(0deg);
+      }
+
+      65%,
+      85% {
+        transform: rotateY(95deg);
+      }
+
+      92%,
+      100% {
+        transform: rotateY(0deg);
+      }
+    }
+
+    .medical-cross {
+      font-size: 1.4rem;
+      color: #ef4444;
+      animation: cross-pulse 2s infinite alternate;
+    }
+
+    @keyframes cross-pulse {
+      from {
+        transform: scale(0.9);
+      }
+
+      to {
+        transform: scale(1.1);
+      }
+    }
+
+    .person-scanner {
+      position: absolute;
+      left: 25px;
+      bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      z-index: 10;
+    }
+
+    .person-avatar {
+      font-size: 2.2rem;
+      position: relative;
+      animation: person-fade 8s infinite ease-in-out;
+    }
+
+    .person-avatar::before {
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      content: "\f007";
+      animation: avatar-swap 8s infinite ease-in-out;
+    }
+
+    @keyframes person-fade {
+
+      0%,
+      45% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      48%,
+      52% {
+        transform: translateX(-10px);
+        opacity: 0;
+      }
+
+      55%,
+      90% {
+        transform: translateX(0);
+        opacity: 1;
+      }
+
+      93%,
+      100% {
+        transform: translateX(10px);
+        opacity: 0;
+      }
+    }
+
+    @keyframes avatar-swap {
+
+      0%,
+      45% {
+        content: "\f21b";
+        color: #ef4444;
+      }
+
+      55%,
+      90% {
+        content: "\f0f0";
+        color: #10b981;
+      }
+    }
+
+    .zone-indicator-badge {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      z-index: 12;
+      animation: zone-status-bg 8s infinite ease-in-out;
+    }
+
+    @keyframes zone-status-bg {
+
+      0%,
+      20% {
+        background: #64748b;
+        color: white;
+      }
+
+      21%,
+      50% {
+        background: rgba(239, 68, 68, 0.15);
+        color: #ef4444;
+        border: 1px solid #ef4444;
+      }
+
+      55%,
+      85% {
+        background: rgba(16, 185, 129, 0.15);
+        color: #10b981;
+        border: 1px solid #10b981;
+      }
+
+      90%,
+      100% {
+        background: #64748b;
+        color: white;
+      }
+    }
+
+    .zone-indicator-badge::after {
+      content: "ICU RESTRICTED ZONE";
+      animation: zone-status-txt 8s infinite ease-in-out;
+    }
+
+    @keyframes zone-status-txt {
+
+      0%,
+      20% {
+        content: "ICU ZONE SECURE";
+      }
+
+      21%,
+      50% {
+        content: "BREACH: ACCESS DENIED!";
+      }
+
+      55%,
+      85% {
+        content: "STAFF: ACCESS GRANTED";
+      }
+
+      90%,
+      100% {
+        content: "ICU ZONE SECURE";
+      }
+    }
+
+    .laser-line-scan {
+      position: absolute;
+      left: 20px;
+      width: 45px;
+      height: 3px;
+      background: #ef4444;
+      box-shadow: 0 0 6px #ef4444;
+      animation: scan-vertical 2s infinite ease-in-out, laser-color-change 8s infinite ease-in-out;
+      z-index: 11;
+      bottom: 20px;
+    }
+
+    @keyframes scan-vertical {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-40px);
+      }
+    }
+
+    @keyframes laser-color-change {
+
+      0%,
+      50% {
+        background: #ef4444;
+        box-shadow: 0 0 6px #ef4444;
+      }
+
+      55%,
+      90% {
+        background: #10b981;
+        box-shadow: 0 0 6px #10b981;
+      }
+
+      91%,
+      100% {
+        background: #ef4444;
+        box-shadow: 0 0 6px #ef4444;
+      }
+    }
+
+    /* Section Titles */
+    .section-title {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .section-title p {
+      color: var(--text-secondary);
+      max-width: 650px;
+      margin: 1rem auto 0;
+      font-size: 1.05rem;
+    }
+
+    /* Features Grid */
+    .features {
+      padding: 5rem 0;
+      background: var(--bg-primary);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 2rem;
+      transition: all 0.35s ease;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--card-shadow);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--btn-primary);
+      box-shadow: 0 20px 30px -12px rgba(10, 102, 185, 0.15);
+    }
+
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(10, 102, 185, 0.08);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-icon i {
+      font-size: 1.8rem;
+      color: var(--btn-primary);
+    }
+
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+      color: var(--text-primary);
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Stats Section */
+    .stats {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-primary);
+      padding: 4rem 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--btn-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
+    /* Benefits List */
+    .benefits {
+      padding: 5rem 0;
+      background: var(--bg-primary);
+    }
+
+    .benefits-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .benefit-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      background: var(--bg-secondary);
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+    }
+
+    .benefit-item i {
+      font-size: 1.5rem;
+      color: #10b981;
+    }
+
+    .benefit-item span {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 5rem 0;
+      background: var(--bg-primary);
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .testimonial-card {
+      background: var(--bg-secondary);
+      border-radius: 24px;
+      padding: 2rem;
+      border: 1px solid var(--border-color);
+    }
+
+    .stars {
+      color: #f5b042;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card p {
+      color: var(--text-secondary);
+      font-style: italic;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .testimonial-card h4 {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, #0f2b3d, #1e4a6e);
+      color: white;
+      padding: 4rem;
+      text-align: center;
+      border-radius: 24px;
+      margin: 3rem 0;
+      box-shadow: var(--card-shadow);
+    }
+
+            /* Footer */
+    footer {
+      background: var(--footer-bg, #020617);
+      color: #94a3b8;
+      padding: 3rem 0 2rem;
+      margin-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      transition: background-color 0.3s ease;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-grid h4 {
+      color: white;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .footer-grid p {
+      color: #94a3b8;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .footer-grid ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-grid li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-grid a {
+      color: #94a3b8;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-grid a:hover {
+      color: white;
+    }
+
+    .copyright {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #1e4a6e;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .nav-menu {
+        display: none;
+      }
+
+      .mobile-toggle {
+        display: block;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 0 1.2rem;
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .mobile-menu-panel {
+      position: fixed;
+      top: 0;
+      right: -280px;
+      width: 260px;
+      height: 100%;
+      background: var(--card-bg);
+      z-index: 1100;
+      box-shadow: -5px 0 30px rgba(0, 0, 0, 0.1);
+      transition: 0.3s;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .mobile-menu-panel.open {
+      right: 0;
+    }
+
+    .overlay-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: 1050;
+      display: none;
+    }
+
+    .overlay-menu.active {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header" id="navbar">
+    <div class="container">
+      <div class="navbar">
+        <a href="../index.html" class="logo"><i class="fas fa-eye"></i><span>EyeSense</span></a>
+        <div class="nav-menu">
+          <a href="../index.html">Home</a>
+          <div class="dropdown">
+            <button class="dropdown-btn">Features <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="../features/ai-surveillance.html">AI Surveillance</a>
+              <a href="../features/visitor-management.html">Visitor Management</a>
+              <a href="../features/society-management.html"> Society Management</a>
+              <a href="../features/security-operations.html"> Security Operations</a>
+              <a href="../features/payment-billing.html">Payment & Billing</a>
+              <a href="../features/smart-notifications.html">Smart Notifications</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="dropdown-btn">Solutions <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="residential.html"> Residential Societies</a>
+              <a href="commercial.html"> Commercial Buildings</a>
+              <a href="education.html"> Schools & Colleges</a>
+              <a href="healthcare.html"> Hospitals</a>
+              <a href="manufacturing.html"> Factories & Warehouses</a>
+              <a href="retail.html"> Retail Stores</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="dropdown-btn">Industries <i class="fas fa-chevron-down"></i></button>
+            <div class="dropdown-content">
+              <a href="../industries/residential-industry.html">Residential Societies</a>
+              <a href="../industries/healthcare-industry.html">Healthcare Industries</a>
+              <a href="../industries/education-industry.html">Education Societies</a>
+              <a href="../industries/manufacturing-industry.html">Manufacturing Industries</a>
+              <a href="../industries/logistics-industry.html">Logistics Industries</a>
+              <a href="../industries/corporate-industry.html">Corporate Offices</a>
+            </div>
+          </div>
+          <a href="../pricing.html">Pricing</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="../index.html#request-demo">Request Demo</a>
+          <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i> Theme</button>
+          <a href="../login.php">Login</a>
+          <a href="../signup.html">Sign Up</a>
+          <div class="dropdown download-dropdown">
+            <button class="btn-download"
+              style="padding: 0.4rem 1rem; border-radius: 40px; border: none; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; background: #2b32b5; color: white;">
+              <i class="fas fa-download"></i> Download
+            </button>
+            <div class="dropdown-content" style="min-width: 180px; left: auto; right: 0;">
+              <a href="https://indsac.cloudtb.online/Eyesense.exe" download><i class="fas fa-download"></i> Download for
+                Windows</a>
+              <a href="https://indsac.cloudtb.online/u/download/prod/Eyesense.apk" download><i
+                  class="fab fa-android" style="color: #2b32b5;"></i> Android APK</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu-panel" id="mobilePanel">
+    <div style="display: flex; flex-direction: column; gap: 1.2rem; overflow-y: auto; height: 100%;">
+      <a href="../index.html" style="text-decoration: none; font-weight: 600; color: var(--text-primary);">Home</a>
+
+      <div style="font-weight: 600; color: var(--text-primary); margin-top: 0.5rem;">Features</div>
+      <div
+        style="display: flex; flex-direction: column; gap: 0.8rem; padding-left: 1rem; border-left: 2px solid var(--border-color);">
+        <a href="../features/ai-surveillance.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">AI Surveillance</a>
+        <a href="../features/visitor-management.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Visitor Management</a>
+        <a href="../features/society-management.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Society Management</a>
+        <a href="../features/security-operations.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Security Operations</a>
+        <a href="../features/payment-billing.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Payment & Billing</a>
+        <a href="../features/smart-notifications.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Smart Notifications</a>
+      </div>
+
+      <div style="font-weight: 600; color: var(--text-primary); margin-top: 0.5rem;">Solutions</div>
+      <div
+        style="display: flex; flex-direction: column; gap: 0.8rem; padding-left: 1rem; border-left: 2px solid var(--border-color);">
+        <a href="residential.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Residential Societies</a>
+        <a href="commercial.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Commercial Buildings</a>
+        <a href="education.html" style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Schools
+          & Colleges</a>
+        <a href="healthcare.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Hospitals</a>
+        <a href="manufacturing.html"
+          style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Factories & Warehouses</a>
+        <a href="retail.html" style="text-decoration: none; font-size: 0.9rem; color: var(--text-secondary);">Retail
+          Stores</a>
+      </div>
+
+      <a href="../pricing.html"
+        style="text-decoration: none; font-weight: 600; color: var(--text-primary); margin-top: 0.5rem;">Pricing</a>
+      <a href="../index.html#about"
+        style="text-decoration: none; font-weight: 600; color: var(--text-primary);">About</a>
+      <a href="../index.html#contact"
+        style="text-decoration: none; font-weight: 600; color: var(--text-primary);">Contact</a>
+
+      <button class="theme-toggle" id="themeToggleMobile" style="margin-top: 1rem; width: fit-content;"><i
+          class="fas fa-moon"></i> Theme</button>
+
+      <button class="btn-outline" onclick="location.href='../login.php'"
+        style="margin-top: 1rem;">Login</button>
+      <button class="btn-solid" onclick="location.href='../signup.html'">Sign Up</button>
+    </div>
+  </div>
+  <div class="overlay-menu" id="overlayMenu"></div>
+
+  <!-- Hero Section (Media Left Layout) -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-media">
+          <!-- Interactive Smart Restricted Zone ICU Access Guard -->
+          <div class="animation-container">
+            <div class="zone-indicator-badge"></div>
+            <div class="healthcare-scene">
+              <div class="laser-line-scan"></div>
+              <div class="person-scanner">
+                <div class="person-avatar"></div>
+              </div>
+              <div class="secure-door-frame">
+                <div class="secure-door-leaf door-left">
+                  <i class="fas fa-plus medical-cross"></i>
+                </div>
+                <div class="secure-door-leaf door-right">
+                  <i class="fas fa-plus medical-cross"></i>
+                </div>
+              </div>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); font-weight: 500;">
+              <i class="fas fa-user-shield"></i> Live AI Facial Scanner Restricted Zone Guard
+            </p>
+          </div>
+        </div>
+        <div class="hero-text">
+          <span class="hero-badge"><i class="fas fa-hospital"></i> Hospitals & Clinics</span>
+          <h1>Safe & Efficient <span>Healthcare Flow</span></h1>
+          <p>Creating highly secure, compliant, and responsive hospital environments. Streamline patient check-ins,
+            automate secure access control in pharmaceutical/ICU zones, and track mobile assets and personnel in
+            real-time.</p>
+          <div class="hero-buttons">
+            <a href="../index.html#request-demo" class="btn-solid">Get Healthcare Demo →</a>
+            <a href="#overview" class="btn-outline">Explore Capabilities</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-col">
+          <div class="stat-number">280+</div>
+          <div class="stat-label">Hospitals Secured</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-number">5M+</div>
+          <div class="stat-label">Patient Visits Managed</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">HIPAA/Safety Compliance</div>
+        </div>
+        <div class="stat-col">
+          <div class="stat-number">50%</div>
+          <div class="stat-label">Faster Response Times</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenges Section -->
+  <section id="overview" class="features" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-title">
+        <h2>Challenges We Solve</h2>
+        <p>Mitigate security vulnerabilities and optimize patient transit flows.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-user-lock"></i></div>
+          <h3>Unprotected Zones</h3>
+          <p>Unauthorized walk-ins in ICUs, infant wards, and medical warehouse facilities.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-search-location"></i></div>
+          <h3>Asset Allocation Delays</h3>
+          <p>Hours wasted searching for vital equipment like ventilators, crash carts, and wheelchairs.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-users-slash"></i></div>
+          <h3>Overcrowded Waiting Rooms</h3>
+          <p>Inefficient check-in lanes, lobby bottlenecks, and security friction during guest hours.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-phone-slash"></i></div>
+          <h3>Critical Alert Delays</h3>
+          <p>Inability to dispatch distress panic calls instantly to localized medical response teams.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Capabilities Section -->
+  <section class="features">
+    <div class="container">
+      <div class="section-title">
+        <h2>EyeSense Solution for Healthcare Facilities</h2>
+        <p>Intelligent access, asset logs, and crisis alarms designed for medical excellence.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-lock"></i></div>
+          <h3>Restricted Zone Guard</h3>
+          <p>Strict facial access barriers at laboratories, pharmacy stores, and ICU wings with instant alerts on
+            breaches.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <h3>Real-Time Asset Tracking</h3>
+          <p>Bluetooth BLE tag integration to locate medical equipment, ventilators, and stretchers instantly.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-id-badge"></i></div>
+          <h3>Smart Visitor Logs</h3>
+          <p>Self check-in visitor counters, digitally bounded guest pass allocations, and automated out-time alerts.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-bell"></i></div>
+          <h3>One-Click SOS Alarms</h3>
+          <p>Direct panic triggers for nurse stations, threat security teams, and administrators for immediate crisis
+            handling.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-procedures"></i></div>
+          <h3>Patient Fall Detection</h3>
+          <p>AI cameras positioned in corridors that trigger critical alerts to duty nurses when a fall occurs.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-network-wired"></i></div>
+          <h3>Staff Optimization Reports</h3>
+          <p>Heatmaps displaying doctor round schedules and ward attendance patterns to maximize utility.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-title">
+        <h2>Key Benefits</h2>
+        <p>Driving safety, rapid emergency dispatch, and full regulatory audit trails.</p>
+      </div>
+      <div class="benefits-list">
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>Elimination of pharmaceutical zone breach incidents</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>Zero hours wasted searching for tracked ventilators</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>90% reduction in patient lobby check-in waiting times</span>
+        </div>
+        <div class="benefit-item">
+          <i class="fas fa-check-circle"></i>
+          <span>Strict compliance with medical facility safety laws</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials">
+    <div class="container">
+      <div class="section-title">
+        <h2>Endorsed by Healthcare Professionals</h2>
+        <p>Ensuring patient safety and operational excellence globally.</p>
+      </div>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+              class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p>"The real-time tracking of ventilators and stretchers saved our clinical staff countless hours. It
+            significantly improved emergency response."</p>
+          <h4>— Dr. Anil Mehta, Chief Operations Officer, City Health Hospital</h4>
+        </div>
+        <div class="testimonial-card">
+          <div class="stars">
+            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+              class="fas fa-star"></i><i class="fas fa-star"></i>
+          </div>
+          <p>"Fall detection alerts in ward corridors have helped us dispatch help to vulnerable seniors in seconds.
+            High-fidelity utility."</p>
+          <h4>— Sister Clara, Nursing Director, Care Valley Clinic</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <div class="container">
+    <section class="cta-section">
+      <h2>Secure your hospital with AI</h2>
+      <p style="margin: 1rem 0 2rem;">Help us elevate patient safety. Discuss compliance integrations with our experts.
+      </p>
+      <a href="../index.html#request-demo" class="btn-solid"
+        style="background: white !important; color: #0f2b3d !important;">Schedule Demo →</a>
+    </section>
+  </div>
+
+    <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4><a href="../index.html" style="color: white; text-decoration: none;">EyeSense</a></h4>
+          <p><a href="../index.html">AI-driven security platform</a></p>
+        </div>
+        <div>
+          <h4>Product</h4>
+          <ul>
+            <li><a href="../features/ai-surveillance.html">AI Surveillance</a></li>
+            <li><a href="../features/visitor-management.html">Visitor Management</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Solutions</h4>
+          <ul>
+            <li><a href="../solutions/residential.html">Residential</a></li>
+            <li><a href="../solutions/commercial.html">Commercial</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <p><i class="fas fa-envelope"></i> eyesense@indsac.com</p>
+          <p><i class="fas fa-phone"></i> +91 76 7628 9081</p>
+        </div>
+      </div>
+      <div class="copyright">© 2026 EyeSense. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeToggleMobile = document.getElementById('themeToggleMobile');
+
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    if (themeToggle) themeToggle.addEventListener('click', toggleDark);
+    if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleDark);
+    if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
+
+    // Scroll navbar effect
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 30) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const panel = document.getElementById('mobilePanel');
+    const overlay = document.getElementById('overlayMenu');
+
+    function closeMenu() {
+      panel.classList.remove('open');
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function openMenu() {
+      panel.classList.add('open');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    menuBtn.addEventListener('click', () => {
+      if (panel.classList.contains('open')) closeMenu();
+      else openMenu();
+    });
+
+    overlay.addEventListener('click', closeMenu);
+  </script>
+</body>
+
+</html>
