@@ -3786,7 +3786,7 @@
                             <a href="https://indsac.cloudtb.online/Eyesense.exe" download class="btn btn-primary">
                                 <i class="fas fa-download"></i> Download for Windows
                             </a>
-                            <a href="https://indsac.cloudtb.online/u/download/prod/Eyesense.apk" download>
+                            <a href="/setup/eyesense.apk" onclick="alert('Android APK download started!')">
                                 <i class="fab fa-android" style="color: #2b32b5;"></i> Android APK
                             </a>
                         </div>
@@ -4315,8 +4315,8 @@
         <div class="container">
             <div class="footer-grid">
                 <div>
-                    <h4><a href="index.html" onclick="if(typeof showPage==='function'){showPage('home'); window.scrollTo({top:0,behavior:'smooth'}); return false;}" style="color: white; text-decoration: none;">EyeSense</a></h4>
-                    <p><a href="index.html" onclick="if(typeof showPage==='function'){showPage('home'); window.scrollTo({top:0,behavior:'smooth'}); return false;}">AI-driven security platform</a></p>
+                    <h4>EyeSense</h4>
+                    <p>AI-driven security platform</p>
                 </div>
                 <div>
                     <h4>Product</h4>
@@ -4379,8 +4379,8 @@
         window.addEventListener('hashchange', handleHashRoute);
 
         function showFeature(featureId) { window.location.href = `features/${featureId}.html`; }
-        function showSolution(solutionId) { window.location.href = `features/solutions/${solutionId}.html`; }
-        function showIndustry(industryId) { window.location.href = `features/solutions/industries/${industryId}.html`; }
+        function showSolution(solutionId) { window.location.href = `solutions/${solutionId}.html`; }
+        function showIndustry(industryId) { window.location.href = `industries/${industryId}.html`; }
 
         // Notification Toast System
         function showToast(message, type = 'success') {
@@ -4485,7 +4485,7 @@
                         </div>
                         <h3>${item.name}</h3>
                         <p>${item.desc}</p>
-                        <button class="detail-btn">Learn More →</button>
+                        <button class="detail-btn" onclick="event.stopPropagation(); showFeature('${item.id}')">Learn More →</button>
                     </div>`;
                 } else {
                     return `
@@ -4499,7 +4499,7 @@
                         </div>
                         <h3>${item.name}</h3>
                         <p>${item.desc}</p>
-                        <button class="detail-btn">Learn More →</button>
+                        <button class="detail-btn" onclick="event.stopPropagation(); show${type}('${item.id}')">Learn More →</button>
                     </div>`;
                 }
             }).join('');
